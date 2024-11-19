@@ -14,8 +14,6 @@ namespace PROJEKT
             Console.WriteLine("Hello, World!");
         }
 
-        
-
     }
     public class CarInfo(double enginecapacity, string suspension, string color, int horsepower, int vmax,
         int year, string fueltype, double price, double fuelconsumptioncity,
