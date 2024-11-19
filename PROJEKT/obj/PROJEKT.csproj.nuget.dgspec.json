@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\PROJEKT.csproj": {}
+    "C:\\Users\\user\\Documents\\5c\\Samochody\\PROJEKT\\PROJEKT.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\PROJEKT.csproj": {
+    "C:\\Users\\user\\Documents\\5c\\Samochody\\PROJEKT\\PROJEKT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\PROJEKT.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Documents\\5c\\Samochody\\PROJEKT\\PROJEKT.csproj",
         "projectName": "PROJEKT",
-        "projectPath": "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\PROJEKT.csproj",
+        "projectPath": "C:\\Users\\user\\Documents\\5c\\Samochody\\PROJEKT\\PROJEKT.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\obj\\",
+        "outputPath": "C:\\Users\\user\\Documents\\5c\\Samochody\\PROJEKT\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -60,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
