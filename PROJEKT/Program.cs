@@ -15,6 +15,17 @@ namespace PROJEKT
         }
 
     }
+    Seat Exeo = new Seat(1.8, "czarny", 217, 2009, "benzyna", 24999, 10.0, 6.0, 886);
+    Seat Tarraco = new Seat(2.0, "szary", 202, 2020, "diesel", 139900, 9.0, 6.3, 1071);
+    Porsche Cayenne = new Porsche(3.0, "czarny", 286, 2019,"benzyna", 238000, 11.0, 8.0, 658)
+    Porsche Panamera = new Porsche(3.6, "granatowy", 288, 2012, "benzyna", 121900, 13.0, 7.0, 833);
+    Porsche Macan_S = new Porsche(3.0, "czarny", 232, 2018, "benzyna", 153999, 11.0, 7.0, 609);
+    Porsche Boxster718 = new Porsche(2.0, "szary", 293, 2018, "benzyna", 179900, 11.0, 6.0, 635);
+    Seat Ibiza = new Seat(1.2, "czarny", 165, 2009, "benzyna", 13900, 7.6, 5.1, 763);
+    Skoda Karoq = new Skoda(1.5, "czerwony", 210, 2017, "benzyna", 81900, 10.2, 6.4, 943);
+    Skoda Superb = new Skoda(2.0, "srebrny", 225, 2023, "diesel", 157230, 8.3, 5.3, 1220);
+    Audi A7 = new Audi(3.0, "czarny", 250, 2020, "diesel", 229000, 11.2, 6.9, 1086)
+    Audi A5 = new Audi(3.0, "srebrny", 250, 2013, "diesel", 61500, 6.8, 5.1, 970);
     Seat Leon = new Seat(1.4, "czerwony", 203, 2017, "benzyna", 54900, 6.0, 4.0, 962);
     Volkswagen Passat = new Volkswagen(1.8, "czerwony", 220, 2016, "benzyna", 70900, 8.0, 7.0, 1119);
     Audi A4_Avant = new Audi(2.0, "biały", 204, 2021, "diesel", 118900, 5.8, 4.7, 1094);

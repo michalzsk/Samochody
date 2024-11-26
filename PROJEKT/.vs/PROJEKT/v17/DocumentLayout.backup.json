@@ -1,10 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\",
+  "WorkspaceRootPath": "C:\\Users\\user\\Documents\\5c\\Emil Sikorski\\samochody\\PROJEKT\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{645A6F9C-ED82-4262-96FC-591C67B2030F}|PROJEKT.csproj|c:\\users\\user\\documents\\5c\\projekt\\projekt\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{645A6F9C-ED82-4262-96FC-591C67B2030F}|PROJEKT.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\Documents\\5c\\Emil Sikorski\\samochody\\PROJEKT\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,17 +14,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Documents\\5c\\Emil Sikorski\\samochody\\PROJEKT\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\Program.cs",
+              "ToolTip": "C:\\Users\\user\\Documents\\5c\\Emil Sikorski\\samochody\\PROJEKT\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAABMAAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-19T10:10:46.732Z",
               "EditorCaption": ""
