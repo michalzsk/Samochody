@@ -163,3 +163,28 @@ namespace PROJEKT
     {
         string Model = model;
     }
+
+    static void przelicznik()
+{
+    Console.WriteLine("Wybierz opcję przeliczenia:");
+    Console.WriteLine("1. kW na KM");
+    Console.WriteLine("2. KM na kW");
+    int opcja = int.Parse(Console.ReadLine());
+
+    switch (opcja)
+    {
+        case 1:
+            Console.Write("Podaj wartość w kW: ");
+            double kW = double.Parse(Console.ReadLine());
+            double KM = kW * 1.34102;
+            Console.WriteLine($"{kW} kW = {KM} KM");
+            break;
+
+        case 2:
+            Console.Write("Podaj wartość w KM: ");
+            double KM2 = double.Parse(Console.ReadLine());
+            double kW2 = KM2 * 0.7457;
+            Console.WriteLine($"{KM2} KM = {kW2} kW");
+            break;
+    }
+}
