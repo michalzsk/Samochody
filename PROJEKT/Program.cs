@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using System.Drawing.Printing;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
-=======
-﻿using Microsoft.VisualBasic.FileIO;
-using System.Diagnostics;
-using System.Drawing;
 using System;
+using System.Security.Cryptography;
 using System.Text;
-using System.Dynamic;
->>>>>>> 59249132471343a43b5353ddb47e60ed179315d1
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace PROJEKT
 {
@@ -18,316 +10,308 @@ namespace PROJEKT
     {
         static void Main(string[] args)
         {
-<<<<<<< HEAD
+            
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Witaj! Wybierz jedną z opcji:");
+                Console.WriteLine("1. Rejestracja użytkownika");
+                Console.WriteLine("2. Obliczanie raty kredytu");
+                Console.WriteLine("3. Przelicznik jednostek (kW <-> KM)");
+                Console.WriteLine("4. Przelicznik km <-> mil");
+                Console.WriteLine("5. Obliczenia związane z paliwem");
+                Console.WriteLine("6. Wyjście");
+                Console.Write("Wybierz opcję (1-6): ");
+                int choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        RegisterUser();
+                        break;
+                    case 2:
+                        CalculateLoan();
+                        break;
+                    case 3:
+                        PowerUnitConverter();
+                        break;
+                    case 4:
+                        KmMileConverter();
+                        break;
+                    case 5:
+                        FuelCalculations();
+                        break;
+                    case 6:
+                        return; 
+                    default:
+                        Console.WriteLine("Niepoprawny wybór!");
+                        break;
+                }
+            }
+        }
+
+        static void RegisterUser()
+        {
             User user = new User();
             user.Register();
-            if (user.IsRegistered == true)
+            if (user.IsRegistered)
             {
                 user.Print();
             }
-            else {
-                Console.WriteLine("Could not register user, try again");
+            else
+            {
+                Console.WriteLine("Nie udało się zarejestrować użytkownika. Spróbuj ponownie.");
+            }
+
+            WaitForKeyPress();
+        }
+
+        static void CalculateLoan()
+        {
+            Console.WriteLine("Podaj cenę samochodu oraz okres kredytowania.");
+
+            Console.Write("Podaj cenę samochodu: ");
+            double carPrice = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Podaj okres kredytowania w miesiącach: ");
+            int loanTerm = Convert.ToInt32(Console.ReadLine());
+
+            double interestRate = 0;
+
+            if (loanTerm <= 6)
+            {
+                interestRate = 0.02;
+            }
+            else if (loanTerm <= 12)
+            {
+                interestRate = 0.04;
+            }
+            else if (loanTerm <= 24)
+            {
+                interestRate = 0.06;
+            }
+            else
+            {
+                interestRate = 0.10;
+            }
+
+            double monthlyInterestRate = interestRate / 12;
+            double loanAmount = carPrice;
+            double monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - Math.Pow(1 + monthlyInterestRate, -loanTerm));
+
+            Console.WriteLine($"Dla ceny {carPrice} PLN i okresu {loanTerm} miesięcy, oprocentowanie wynosi {interestRate * 100}%.");
+            Console.WriteLine($"Miesięczna rata kredytu wynosi: {Math.Round(monthlyPayment, 2)} PLN.");
+
+            WaitForKeyPress();
+        }
+
+        static void PowerUnitConverter()
+        {
+            Console.WriteLine("Wybierz opcję przeliczenia:");
+            Console.WriteLine("1. kW na KM");
+            Console.WriteLine("2. KM na kW");
+            int option = int.Parse(Console.ReadLine());
+
+            switch (option)
+            {
+                case 1:
+                    Console.Write("Podaj wartość w kW: ");
+                    double kW = double.Parse(Console.ReadLine());
+                    double horsepower = kW * 1.34102;
+                    Console.WriteLine($"{kW} kW = {horsepower} KM");
+                    break;
+                case 2:
+                    Console.Write("Podaj wartość w KM: ");
+                    double kmPower = double.Parse(Console.ReadLine());
+                    double kWValue = kmPower * 0.7457;
+                    Console.WriteLine($"{kmPower} KM = {kWValue} kW");
+                    break;
+                default:
+                    Console.WriteLine("Niepoprawny wybór.");
+                    break;
+            }
+
+            WaitForKeyPress();
+        }
+
+        static void KmMileConverter()
+        {
+            Console.WriteLine("Wybierz opcję:");
+            Console.WriteLine("1 - Przelicz km na mile");
+            Console.WriteLine("2 - Przelicz mile na km");
+
+            int choice = int.Parse(Console.ReadLine());
+
+            if (choice == 1)
+            {
+                Console.Write("Podaj liczbę kilometrów: ");
+                double km = double.Parse(Console.ReadLine());
+                double miles = KmToMiles(km);
+                Console.WriteLine($"{km} kilometrów to {miles} mil.");
+            }
+            else if (choice == 2)
+            {
+                Console.Write("Podaj liczbę mil: ");
+                double miles = double.Parse(Console.ReadLine());
+                double km = MilesToKm(miles);
+                Console.WriteLine($"{miles} mil to {km} kilometrów.");
+            }
+            else
+            {
+                Console.WriteLine("Niepoprawny wybór!");
+            }
+
+            WaitForKeyPress();
+        }
+
+        static double KmToMiles(double km)
+        {
+            return Math.Round(km * 0.621371, 2);
+        }
+
+        static double MilesToKm(double miles)
+        {
+            return Math.Round(miles / 0.621371, 2);
+        }
+
+        static void FuelCalculations()
+        {
+            Console.WriteLine("Wybierz opcję:");
+            Console.WriteLine("1. Obliczanie zasięgu");
+            Console.WriteLine("2. Cena zalania baku");
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    Console.Write("Podaj średnie spalanie auta w mieście (l/100km): ");
+                    double cityFuelConsumption = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Podaj średnie spalanie na trasie (l/100km): ");
+                    double highwayFuelConsumption = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Podaj pojemność baku w litrach: ");
+                    int tankCapacity = Convert.ToInt32(Console.ReadLine());
+
+                    double cityRange = (tankCapacity / cityFuelConsumption) * 100;
+                    double highwayRange = (tankCapacity / highwayFuelConsumption) * 100;
+                    Console.WriteLine($"Zasięg w mieście wynosi: {Math.Round(cityRange, 2)} km, a na trasie wynosi: {Math.Round(highwayRange, 2)} km.");
+                    break;
+
+                case 2:
+                    Console.Write("Podaj typ paliwa (benzyna/diesel): ");
+                    string fuelType = Console.ReadLine().ToLower();
+                    Console.Write("Podaj pojemność baku w litrach: ");
+                    int fuelTank = Convert.ToInt32(Console.ReadLine());
+
+                    if (fuelType == "benzyna")
+                    {
+                        double price95 = fuelTank * 6.07;
+                        double price98 = fuelTank * 6.75;
+                        Console.WriteLine($"Cena za benzyne 95 wynosi: {Math.Round(price95, 2)} zł, a 98 wynosi: {Math.Round(price98, 2)} zł.");
+                    }
+                    else if (fuelType == "diesel")
+                    {
+                        double priceDiesel = fuelTank * 6.12;
+                        double priceDieselPlus = fuelTank * 6.34;
+                        Console.WriteLine($"Cena za ON wynosi: {Math.Round(priceDiesel, 2)} zł, a ON+ wynosi: {Math.Round(priceDieselPlus, 2)} zł.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Niepoprawny typ paliwa.");
+                    }
+                    break;
+
+                default:
+                    Console.WriteLine("Niepoprawny wybór.");
+                    break;
+            }
+
+            WaitForKeyPress();
+        }
+
+        static void WaitForKeyPress()
+        {
+            Console.WriteLine("Naciśnij spację, aby powrócić do menu lub Esc, aby zakończyć program.");
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.Spacebar)
+                {
+                    return;
+                }
+                else if (key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0); 
+                }
             }
         }
-        }
     }
+
     class User
     {
         public bool IsRegistered = false;
         private string Email;
         private string Password;
-        protected byte[] Salt;
-        public bool HasSpecialChars(string yourString)
-        {
-            return yourString.Any(ch => !char.IsLetterOrDigit(ch));
-        }
-        public bool HasUpperCase(string yourString)
-        {
-            return yourString.Any(ch => char.IsUpper(ch));
-        }
-        public bool HasNumber(string yourString)
-        {
-            return yourString.Any(ch => char.IsNumber(ch));
-        }
-        public bool IsEmailCorrect(string email)
-        {
-            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-            Match match = regex.Match(email);
-            if (match.Success)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        private byte[] Salt;
+
         public void Print()
         {
-            Console.WriteLine($" Email:{this.Email}\n Password:{this.Password}\n Hash:{Convert.ToBase64String(this.Salt)}");
+            Console.WriteLine("Rejestracja zakończona pomyślnie.");
+            Console.WriteLine($"Email: {Email}");
         }
+
         public void Register()
         {
-            string email = Console.ReadLine();
-            string password = Console.ReadLine();
-            string password2 = Console.ReadLine();
-            if (email != null && password != null && password == password2 && IsEmailCorrect(email))
+            string password;
+            while (true)
             {
-                if (password.Length > 7 && HasSpecialChars(password) && HasUpperCase(password))
-                {
-                    byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
-                    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                        password: password!,
-                        salt: salt,
-                        prf: KeyDerivationPrf.HMACSHA256,
-                        iterationCount: 100000,
-                        numBytesRequested: 256 / 8));
-                    this.Email = email;
-                    this.Password = hashed;
-                    this.Salt = salt;
-                    this.IsRegistered = true;
-                    Console.WriteLine("Zarejestrowano pomyślnie");
-                }
-                else
-                {
-                    Console.WriteLine("Password must contain atleast 8 characters, 1 special character ,1 uppercase character and 1 number");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Niepoprawne dane");
-            }
-=======
-            Console.WriteLine("Witaj! Podaj cenę samochodu oraz okres, na który chcesz wziąć raty.");
-
-            Console.Write("Podaj cenę samochodu: ");
-            double cenaSamochodu = Convert.ToDouble(Console.ReadLine());
-
-            Console.Write("Podaj okres kredytowania w miesiącach: ");
-            int okresKredytowania = Convert.ToInt32(Console.ReadLine());
-
-            
-            double oprocentowanie = 0;
-
-            if (okresKredytowania <= 6)
-            {
-                oprocentowanie = 0.02;  
-            }
-            else if (okresKredytowania <= 12)
-            {
-                oprocentowanie = 0.04;  
-            }
-            else if (okresKredytowania <= 24)
-            {
-                oprocentowanie = 0.06;  
-            }
-            else
-            {
-                oprocentowanie = 0.10;  
+                Console.WriteLine("Podaj email:");
+                Email = Console.ReadLine();
+                if (IsEmailCorrect(Email)) break;
+                Console.WriteLine("Niepoprawny email.");
             }
 
-            
-            double miesięczneOprocentowanie = oprocentowanie / 12;
+            while (true)
+            {
+                Console.WriteLine("Podaj hasło (min. 8 znaków, zawierać ma dużą literę, cyfrę i znak specjalny):");
+                password = Console.ReadLine();
+                if (password.Length >= 8 && HasSpecialChars(password) && HasUpperCase(password) && HasNumber(password)) break;
+                Console.WriteLine("Hasło nie spełnia wymagań.");
+            }
 
-            double kwotaPożyczki = cenaSamochodu;
-            double rata = (kwotaPożyczki * miesięczneOprocentowanie) / (1 - Math.Pow(1 + miesięczneOprocentowanie, -okresKredytowania));
+            Salt = new byte[16];
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(Salt);
+            }
+            Password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password,
+                Salt,
+                KeyDerivationPrf.HMACSHA256,
+                10000,
+                256 / 8));
 
-            Console.WriteLine($"Dla ceny {cenaSamochodu} PLN i okresu {okresKredytowania} miesięcy, oprocentowanie wynosi {oprocentowanie * 100}%.");
-            Console.WriteLine($"Miesięczna rata kredytu wynosi: {Math.Round(rata,2)} PLN.");
->>>>>>> 59249132471343a43b5353ddb47e60ed179315d1
+            IsRegistered = true;
         }
 
-    }
-    // public class CarInfo(double enginecapacity, string suspension, string color, int horsepower, int vmax,
-    //     int year, string fueltype, double price, double fuelconsumptioncity,
-    //     double fuelconsumptiontrip, int range)
-    // {
-    //     double EngineCapacity = enginecapacity;
-    //     string Suspension = suspension;
-    //     string Color = color;
-    //     int HorsePower = horsepower;
-    //     int Vmax = vmax;
-    //     int Year = year;
-    //     string Fuel = fueltype;
-    //     double Price = price;
-    //     double FuelConsumptionCity = fuelconsumptioncity;
-    //     double FuelConsumptionTrip = fuelconsumptiontrip;
-    //     int Range = range;
-
-    // }
-    // public class Car(CarInfo cinfo)
-    // {
-    //     CarInfo CarInfo = cinfo;
-    // }
-    // public class BMW(CarInfo cinfo, string model) : Car(cinfo)
-    // {
-    //     string Model = model;
-    // }
-
-    static void przelicznik()
-{
-    Console.WriteLine("Wybierz opcję przeliczenia:");
-    Console.WriteLine("1. kW na KM");
-    Console.WriteLine("2. KM na kW");
-    int opcja = int.Parse(Console.ReadLine());
-
-    switch (opcja)
-    {
-        case 1:
-            Console.Write("Podaj wartość w kW: ");
-            double kW = double.Parse(Console.ReadLine());
-            double KM = kW * 1.34102;
-            Console.WriteLine($"{kW} kW = {KM} KM");
-            break;
-
-        case 2:
-            Console.Write("Podaj wartość w KM: ");
-            double KM2 = double.Parse(Console.ReadLine());
-            double kW2 = KM2 * 0.7457;
-            Console.WriteLine($"{KM2} KM = {kW2} kW");
-            break;
-    } 
-        
-}
-static void przlicznik_km_mil(){  
-
-    Console.WriteLine("Witaj! W tym programie możesz w prosty sposób przeliczyć kilometry na mile i na odwrót!");
-    Console.WriteLine("Wybierz opcję:");
-    Console.WriteLine("1 - Przelicz km na mile");
-    Console.WriteLine("2 - Przelicz mile na km");
-
-    
-    int wybor = int.Parse(Console.ReadLine());
-
-    if (wybor == 1)
-    {
-        
-        Console.WriteLine("Podaj liczbę kilometrów:");
-        double km = double.Parse(Console.ReadLine());
-        double mile = KmNaMile(km);
-        Console.WriteLine($"{km} kilometrów to {mile} mil.");
-    }
-    else if (wybor == 2)
-    {
-        
-        Console.WriteLine("Podaj liczbę mil:");
-        double mile = double.Parse(Console.ReadLine());
-        double km = MileNaKm(mile);
-        Console.WriteLine($"{mile} mil to {km} kilometrów.");
-    }
-    else
-    {
-        Console.WriteLine("Niepoprawny wybór!");
-        
-    }
-}
-static double KmNaMile(double km)
-{
-    return Math.Round(km * 0.621371,2); 
-}           
-static double MileNaKm(double mile)
-{
-    return Math.Round(mile / 0.621371,2); 
-}
-Seat Exeo = new Seat(1.8, "czarny", 217, 2009, "benzyna", 24999, 10.0, 6.0, 886);
-    Seat Tarraco = new Seat(2.0, "szary", 202, 2020, "diesel", 139900, 9.0, 6.3, 1071);
-    Porsche Cayenne = new Porsche(3.0, "czarny", 286, 2019,"benzyna", 238000, 11.0, 8.0, 658)
-    Porsche Panamera = new Porsche(3.6, "granatowy", 288, 2012, "benzyna", 121900, 13.0, 7.0, 833);
-    Porsche Macan_S = new Porsche(3.0, "czarny", 232, 2018, "benzyna", 153999, 11.0, 7.0, 609);
-    Porsche Boxster718 = new Porsche(2.0, "szary", 293, 2018, "benzyna", 179900, 11.0, 6.0, 635);
-    Seat Ibiza = new Seat(1.2, "czarny", 165, 2009, "benzyna", 13900, 7.6, 5.1, 763);
-    Skoda Karoq = new Skoda(1.5, "czerwony", 210, 2017, "benzyna", 81900, 10.2, 6.4, 943);
-    Skoda Superb = new Skoda(2.0, "srebrny", 225, 2023, "diesel", 157230, 8.3, 5.3, 1220);
-    Audi A7 = new Audi(3.0, "czarny", 250, 2020, "diesel", 229000, 11.2, 6.9, 1086)
-    Audi A5 = new Audi(3.0, "srebrny", 250, 2013, "diesel", 61500, 6.8, 5.1, 970);
-    Seat Leon = new Seat(1.4, "czerwony", 203, 2017, "benzyna", 54900, 6.0, 4.0, 962);
-    Volkswagen Passat = new Volkswagen(1.8, "czerwony", 220, 2016, "benzyna", 70900, 8.0, 7.0, 1119);
-    Audi A4_Avant = new Audi(2.0, "biały", 204, 2021, "diesel", 118900, 5.8, 4.7, 1094);
-    Audi Q5 = new Audi(2.0, "biały", 190, 218, 2017, "diesel", 70000, 4.0, 5.0, 785);
-    Skoda Octavia = new Skoda(2.0, "czarny", 150, 227, 2018, "diesel", 70000, 4.0, 5.0, 818);
-    Volkswagen GolfPlus = new Volkswagen(1.4, "szary", 80, 214, 2008, "benzyna", 17500, 8.7, 5.4, 846)
-    Skoda RAPIDII = new Skoda(1.0, "niebieski", 110, 189, 2018, "benzyna", 45000, 5.5, 4.0, 1196);
-    Volkswagen Scirocco = new Volkswagen(1.4, "niebieski", 150, 218, 2011, "benzyna", 40000, 8.0, 5.0, 833);
-    Volkswagen TRoc = new Volkswagen(1.5, "czarny", 150, 207, 2019, "benzyna", 50000, 6.0, 4.0, 733);
-    public class CarInfo(double enginecapacity, string color, int horsepower, int vmax,
-        int year, string fueltype, double price, double fuelconsumptioncity,
-        double fuelconsumptiontrip, int range)
-    {
-        double EngineCapacity = enginecapacity;
-        string Color = color;
-        int HorsePower = horsepower;
-        int Vmax = vmax;
-        int Year = year;
-        string Fuel = fueltype;
-        double Price = price;
-        double FuelConsumptionCity = fuelconsumptioncity;
-        double FuelConsumptionTrip = fuelconsumptiontrip;
-        int Range = range;
-
-    }
-    public class Car(CarInfo cinfo)
-    {
-        CarInfo CarInfo = cinfo;
-    }
-    public class Volkswagen(CarInfo cinfo, string model) : Car(cinfo)
-    {
-        string Model = model;
-    }
-    public class Audi(CarInfo cinfo, string model) : Car(cinfo)
-    {
-        string Model = model;
-    }
-    public class Skoda(CarInfo cinfo, string model) : Car(cinfo)
-    {
-        string Model = model;
-    }
-    public class Seat(CarInfo cinfo, string model) : Car(cinfo)
-    {
-        string Model = model;
-    }
-    public class Porsche(CarInfo cinfo, string model) : Car(cinfo)
-    {
-        string Model = model;
-    }
-}
-static void paliwo(){
-    Console.WriteLine("1.Obliczanie zasięgu");
-Console.WriteLine("2.Cena zalania baku");
-int choice = Convert.ToInt32(Console.ReadLine());
-switch (choice)
-{
-    case 1:
-        Console.WriteLine("Podaj średnie spalanie auta w mieście");
-        double miasto = Convert.ToDouble(Console.ReadLine());
-        Console.WriteLine("Podaj średnie spalanie na trasie");
-        double trasa = Convert.ToDouble(Console.ReadLine());
-        Console.WriteLine("Podaj pojemność baku w litrach");
-        int bak = Convert.ToInt32(Console.ReadLine());
-        double zasieg_miasto = (bak / miasto) * 100;
-        double zasieg_trasa = (bak / trasa) * 100;
-        Console.WriteLine("Zasięg w mieście wynosi: " + Math.Round(zasieg_miasto,2) +"km a zasięg na trasie wynosi: " + Math.Round(zasieg_trasa,2) + "km");
-    break;
-    case 2:
-        Console.WriteLine("Podaj typ (benzyna/diesel)");
-        string typ = Convert.ToString(Console.ReadLine());
-        switch (typ)
+        private bool IsEmailCorrect(string email)
         {
-            case "benzyna":
-                Console.WriteLine("Podaj pojemność baku w litrach");
-                int bak2 = Convert.ToInt32(Console.ReadLine());
-                double cena_95 = bak2 * 6.07;
-                double cena_98 = bak2 * 6.75;
-                Console.WriteLine("Cena za benzyne 95 wynosi: "+Math.Round(cena_95,2) +"zł a 98 wynosi: "+ Math.Round(cena_98, 2) + "zł");
-            break;
-
-            case "diesel":
-                Console.WriteLine("Podaj pojemność baku w litrach");
-                int bak3 = Convert.ToInt32(Console.ReadLine());
-                double cena_diesel = bak3 * 6.12;
-                double cena_diesel2 = bak3 * 6.34;
-                Console.WriteLine("Cena za ON wynosi: " + Math.Round(cena_diesel, 2) + "zł a ON+ wynosi: " + Math.Round(cena_diesel2, 2) + "zł");
-            break;
+            string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            return Regex.IsMatch(email, emailPattern);
         }
-    break;
-}
+
+        private bool HasSpecialChars(string password)
+        {
+            return password.Any(ch => !char.IsLetterOrDigit(ch));
+        }
+
+        private bool HasUpperCase(string password)
+        {
+            return password.Any(char.IsUpper);
+        }
+
+        private bool HasNumber(string password)
+        {
+            return password.Any(char.IsDigit);
+        }
+    }
 }
