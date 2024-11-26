@@ -186,5 +186,47 @@ namespace PROJEKT
             double kW2 = KM2 * 0.7457;
             Console.WriteLine($"{KM2} KM = {kW2} kW");
             break;
+    } 
+        
+}
+static void przlicznik_km_mil(){  
+
+    Console.WriteLine("Witaj! W tym programie możesz w prosty sposób przeliczyć kilometry na mile i na odwrót!");
+    Console.WriteLine("Wybierz opcję:");
+    Console.WriteLine("1 - Przelicz km na mile");
+    Console.WriteLine("2 - Przelicz mile na km");
+
+    
+    int wybor = int.Parse(Console.ReadLine());
+
+    if (wybor == 1)
+    {
+        
+        Console.WriteLine("Podaj liczbę kilometrów:");
+        double km = double.Parse(Console.ReadLine());
+        double mile = KmNaMile(km);
+        Console.WriteLine($"{km} kilometrów to {mile} mil.");
     }
+    else if (wybor == 2)
+    {
+        
+        Console.WriteLine("Podaj liczbę mil:");
+        double mile = double.Parse(Console.ReadLine());
+        double km = MileNaKm(mile);
+        Console.WriteLine($"{mile} mil to {km} kilometrów.");
+    }
+    else
+    {
+        Console.WriteLine("Niepoprawny wybór!");
+        
+    }
+}
+static double KmNaMile(double km)
+{
+    return Math.Round(km * 0.621371,2); 
+}           
+static double MileNaKm(double mile)
+{
+    return Math.Round(mile / 0.621371,2); 
+}
 }
