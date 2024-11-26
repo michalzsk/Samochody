@@ -230,3 +230,44 @@ static double MileNaKm(double mile)
     return Math.Round(mile / 0.621371,2); 
 }
 }
+static void paliwo(){
+    Console.WriteLine("1.Obliczanie zasięgu");
+Console.WriteLine("2.Cena zalania baku");
+int choice = Convert.ToInt32(Console.ReadLine());
+switch (choice)
+{
+    case 1:
+        Console.WriteLine("Podaj średnie spalanie auta w mieście");
+        double miasto = Convert.ToDouble(Console.ReadLine());
+        Console.WriteLine("Podaj średnie spalanie na trasie");
+        double trasa = Convert.ToDouble(Console.ReadLine());
+        Console.WriteLine("Podaj pojemność baku w litrach");
+        int bak = Convert.ToInt32(Console.ReadLine());
+        double zasieg_miasto = (bak / miasto) * 100;
+        double zasieg_trasa = (bak / trasa) * 100;
+        Console.WriteLine("Zasięg w mieście wynosi: " + Math.Round(zasieg_miasto,2) +"km a zasięg na trasie wynosi: " + Math.Round(zasieg_trasa,2) + "km");
+    break;
+    case 2:
+        Console.WriteLine("Podaj typ (benzyna/diesel)");
+        string typ = Convert.ToString(Console.ReadLine());
+        switch (typ)
+        {
+            case "benzyna":
+                Console.WriteLine("Podaj pojemność baku w litrach");
+                int bak2 = Convert.ToInt32(Console.ReadLine());
+                double cena_95 = bak2 * 6.07;
+                double cena_98 = bak2 * 6.75;
+                Console.WriteLine("Cena za benzyne 95 wynosi: "+Math.Round(cena_95,2) +"zł a 98 wynosi: "+ Math.Round(cena_98, 2) + "zł");
+            break;
+
+            case "diesel":
+                Console.WriteLine("Podaj pojemność baku w litrach");
+                int bak3 = Convert.ToInt32(Console.ReadLine());
+                double cena_diesel = bak3 * 6.12;
+                double cena_diesel2 = bak3 * 6.34;
+                Console.WriteLine("Cena za ON wynosi: " + Math.Round(cena_diesel, 2) + "zł a ON+ wynosi: " + Math.Round(cena_diesel2, 2) + "zł");
+            break;
+        }
+    break;
+}
+}
