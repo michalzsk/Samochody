@@ -221,17 +221,12 @@ static void przlicznik_km_mil(){
         
     }
 }
-
-
 static double KmNaMile(double km)
 {
     return Math.Round(km * 0.621371,2); 
-}
-
-           
+}           
 static double MileNaKm(double mile)
 {
     return Math.Round(mile / 0.621371,2); 
 }
-
 }
