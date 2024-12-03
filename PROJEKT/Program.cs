@@ -174,14 +174,21 @@ namespace PROJEKT
             return Math.Round(miles / 0.621371, 2);
         }
 
-        static void FuelCalculations()
+       static void FuelCalculations()
         {
             Console.WriteLine("Wybierz opcję:");
             Console.WriteLine("1. Obliczanie zasięgu");
-            Console.WriteLine("2. Cena zalania baku");
+            Console.WriteLine("2. Cena zalania baku/załadowania");
             int choice = Convert.ToInt32(Console.ReadLine());
 
-            switch (choice)
+    switch (choice)
+    {
+        case 1:
+            Console.WriteLine("Podaj typ samochodu");
+            Console.WriteLine("1.Spalinowy");
+            Console.WriteLine("2.Elektryczne");
+            int carTypeChoice = Convert.ToInt32(Console.ReadLine());
+            switch (carTypeChoice)
             {
                 case 1:
                     Console.Write("Podaj średnie spalanie auta w mieście (l/100km): ");
@@ -194,39 +201,67 @@ namespace PROJEKT
                     double cityRange = (tankCapacity / cityFuelConsumption) * 100;
                     double highwayRange = (tankCapacity / highwayFuelConsumption) * 100;
                     Console.WriteLine($"Zasięg w mieście wynosi: {Math.Round(cityRange, 2)} km, a na trasie wynosi: {Math.Round(highwayRange, 2)} km.");
-                    break;
-
+                break;
                 case 2:
-                    Console.Write("Podaj typ paliwa (benzyna/diesel): ");
-                    string fuelType = Console.ReadLine().ToLower();
-                    Console.Write("Podaj pojemność baku w litrach: ");
-                    int fuelTank = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Podaj średnie zużycie energii auta w mieście (kWh/100km): ");
+                    double cityElectricityConsumption = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Podaj średnie zużycie energii na trasie (kWh/100km): ");
+                    double highwayElectricityConsumption = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Podaj pojemność akumulatora w kWh: ");
+                    int batteryCapacity = Convert.ToInt32(Console.ReadLine());
 
-                    if (fuelType == "benzyna")
-                    {
-                        double price95 = fuelTank * 6.07;
-                        double price98 = fuelTank * 6.75;
-                        Console.WriteLine($"Cena za benzyne 95 wynosi: {Math.Round(price95, 2)} zł, a 98 wynosi: {Math.Round(price98, 2)} zł.");
-                    }
-                    else if (fuelType == "diesel")
-                    {
-                        double priceDiesel = fuelTank * 6.12;
-                        double priceDieselPlus = fuelTank * 6.34;
-                        Console.WriteLine($"Cena za ON wynosi: {Math.Round(priceDiesel, 2)} zł, a ON+ wynosi: {Math.Round(priceDieselPlus, 2)} zł.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Niepoprawny typ paliwa.");
-                    }
-                    break;
-
-                default:
-                    Console.WriteLine("Niepoprawny wybór.");
-                    break;
+                    double cityRangeElectric = (batteryCapacity / cityElectricityConsumption) * 100;
+                    double highwayRangeElectric = (batteryCapacity / highwayElectricityConsumption) * 100;
+                    Console.WriteLine($"Zasięg w mieście wynosi: {Math.Round(cityRangeElectric, 2)} km, a na trasie wynosi: {Math.Round(highwayRangeElectric, 2)} km.");
+                break;
             }
+            
+            break;
 
-            WaitForKeyPress();
-        }
+        case 2:
+            Console.Write("Podaj typ paliwa (benzyna/diesel/elektryczne): ");
+            string fuelType = Console.ReadLine().ToLower();
+            
+
+            if (fuelType == "benzyna")
+            {
+                Console.Write("Podaj pojemność baku w litrach: ");
+                int fuelTank = Convert.ToInt32(Console.ReadLine());
+                double price95 = fuelTank * 6.07;
+                double price98 = fuelTank * 6.75;
+                Console.WriteLine($"Cena za benzyne 95 wynosi: {Math.Round(price95, 2)} zł, a 98 wynosi: {Math.Round(price98, 2)} zł.");
+            }
+            else if (fuelType == "diesel")
+            {
+                Console.Write("Podaj pojemność baku w litrach: ");
+                int fuelTank = Convert.ToInt32(Console.ReadLine());
+                double priceDiesel = fuelTank * 6.12;
+                double priceDieselPlus = fuelTank * 6.34;
+                Console.WriteLine($"Cena za ON wynosi: {Math.Round(priceDiesel, 2)} zł, a ON+ wynosi: {Math.Round(priceDieselPlus, 2)} zł.");
+            }
+            else if (fuelType == "elektryczne")
+            {
+                Console.Write("Podaj pojemność akumulatora w kWh: ");
+                int fuelTank = Convert.ToInt32(Console.ReadLine());
+                double priceElectric = fuelTank * 2;
+                Console.Write("Podaj szybkość ładowarki");
+                double chargerSpeed = Convert.ToDouble(Console.ReadLine());
+                double chargeTime = fuelTank / chargerSpeed;
+                Console.WriteLine($"Cena naładowanie wynosi około: {Math.Round(priceElectric, 2)} zł, a naładowanie od zera zajmie około: {Math.Round(chargeTime,3)} godzin.");
+            }
+            else
+            {
+                Console.WriteLine("Niepoprawny typ paliwa.");
+            }
+            break;
+
+        default:
+            Console.WriteLine("Niepoprawny wybór.");
+            break;
+    }
+
+    WaitForKeyPress();
+}
 
         static void WaitForKeyPress()
         {
