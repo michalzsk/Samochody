@@ -10,7 +10,7 @@ namespace PROJEKT
     {
         static void Main(string[] args)
         {
-            
+
             while (true)
             {
                 Console.Clear();
@@ -42,14 +42,14 @@ namespace PROJEKT
                         FuelCalculations();
                         break;
                     case 6:
-                        return; 
+
+                        return;
                     default:
                         Console.WriteLine("Niepoprawny wybór!");
                         break;
                 }
             }
         }
-
         static void RegisterUser()
         {
             User user = new User();
@@ -64,6 +64,10 @@ namespace PROJEKT
             }
 
             WaitForKeyPress();
+        }
+        static void ViewCars()
+        {
+
         }
 
         static void CalculateLoan()
@@ -240,11 +244,35 @@ namespace PROJEKT
                 }
                 else if (key == ConsoleKey.Escape)
                 {
-                    Environment.Exit(0); 
+                    Environment.Exit(0);
                 }
             }
         }
+        static public void initalizeCars()
+        {
+            Seat Exeo = new Seat(new CarInfo(2.0, "szary", 202, 240, 2020, "diesel", 139900, 9.0, 6.3, 1071), "Exeo");
+            Seat Tarraco = new Seat(new CarInfo(2.0, "szary", 202,240, 2020, "diesel", 139900, 9.0, 6.3, 1071),"Tarraco");
+            Porsche Cayenne = new Porsche(new CarInfo(3.0, "czarny", 286, 420,2019, "benzyna", 238000, 11.0, 8.0, 658),"Cayenne ");
+            Porsche Panamera = new Porsche(new CarInfo(3.6, "granatowy", 288, 420,2012, "benzyna", 121900, 13.0, 7.0, 833),"Panamera ");
+            Porsche Macan_S = new Porsche(new CarInfo(3.0, "czarny", 232, 420,2018, "benzyna", 153999, 11.0, 7.0, 609),"Macan_S ");
+            Porsche Boxster718 = new Porsche(new CarInfo(2.0, "szary", 293, 420,2018, "benzyna", 179900, 11.0, 6.0, 635),"Boxster718 ");
+            Seat Ibiza = new Seat(new CarInfo(1.2, "czarny", 165, 420,2009, "benzyna", 13900, 7.6, 5.1, 763),"Ibiza ");
+            Skoda Karoq = new Skoda(new CarInfo(1.5, "czerwony", 210, 420,2017, "benzyna", 81900, 10.2, 6.4, 943),"Karoq ");
+            Skoda Superb = new Skoda(new CarInfo(2.0, "srebrny", 225, 420,2023, "diesel", 157230, 8.3, 5.3, 1220),"Superb ");
+            Audi A7 = new Audi(new CarInfo(3.0, "czarny", 250, 420,2020, "diesel", 229000, 11.2, 6.9, 1086),"A7 ");
+            Audi A5 = new Audi(new CarInfo(3.0, "srebrny", 250, 420,2013, "diesel", 61500, 6.8, 5.1, 970),"A5 ");
+            Seat Leon = new Seat(new CarInfo(1.4, "czerwony", 203, 420,2017, "benzyna", 54900, 6.0, 4.0, 962),"Leon ");
+            Volkswagen Passat = new Volkswagen(new CarInfo(1.8, "czerwony", 220, 420,2016, "benzyna", 70900, 8.0, 7.0, 1119),"Passat ");
+            Audi A4_Avant = new Audi(new CarInfo(2.0, "biały", 204, 420,2021, "diesel", 118900, 5.8, 4.7, 1094),"A4_Avant ");
+            Audi Q5 = new Audi(new CarInfo(2.0, "biały", 190, 420, 2017, "diesel", 70000, 4.0, 5.0, 785),"Q5 ");
+            Skoda Octavia = new Skoda(new CarInfo(2.0, "czarny", 150, 420, 2018, "diesel", 70000, 4.0, 5.0, 818),"Octavia ");
+            Volkswagen GolfPlus = new Volkswagen(new CarInfo(1.4, "szary", 80, 420, 2008, "benzyna", 17500, 8.7, 5.4, 846),"GolfPlus ");
+            Skoda RAPIDII = new Skoda(new CarInfo(1.0, "niebieski", 110, 420, 2018, "benzyna", 45000, 5.5, 4.0, 1196),"RAPIDII ");
+            Volkswagen Scirocco = new Volkswagen(new CarInfo(1.4, "niebieski", 150, 420, 2011, "benzyna", 40000, 8.0, 5.0, 833),"Scirocco ");
+            Volkswagen TRoc = new Volkswagen(new CarInfo(1.5, "czarny", 150, 420,2019, "benzyna", 50000, 6.0, 4.0, 733), "TRoc ");
+        }
     }
+
 
     class User
     {
@@ -313,5 +341,46 @@ namespace PROJEKT
         {
             return password.Any(char.IsDigit);
         }
+    }
+
+    public class CarInfo(double enginecapacity, string color, int horsepower, int vmax,
+        int year, string fueltype, double price, double fuelconsumptioncity,
+        double fuelconsumptiontrip, int range)
+    {
+        double EngineCapacity = enginecapacity;
+        string Color = color;
+        int HorsePower = horsepower;
+        int Vmax = vmax;
+        int Year = year;
+        string Fuel = fueltype;
+        double Price = price;
+        double FuelConsumptionCity = fuelconsumptioncity;
+        double FuelConsumptionTrip = fuelconsumptiontrip;
+        int Range = range;
+
+    }
+    public class Car(CarInfo cinfo)
+    {
+        CarInfo CarInfo = cinfo;
+    }
+    public class Volkswagen(CarInfo cinfo, string model) : Car(cinfo)
+    {
+        string Model = model;
+    }
+    public class Audi(CarInfo cinfo, string model) : Car(cinfo)
+    {
+        string Model = model;
+    }
+    public class Skoda(CarInfo cinfo, string model) : Car(cinfo)
+    {
+        string Model = model;
+    }
+    public class Seat(CarInfo cinfo, string model) : Car(cinfo)
+    {
+        string Model = model;
+    }
+    public class Porsche(CarInfo cinfo, string model) : Car(cinfo)
+    {
+        string Model = model;
     }
 }
