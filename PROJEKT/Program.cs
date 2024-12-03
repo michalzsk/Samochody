@@ -21,8 +21,9 @@ namespace PROJEKT
                 Console.WriteLine("4. Przelicznik km <-> mil");
                 Console.WriteLine("5. Obliczenia związane z paliwem");
                 Console.WriteLine("6. Wyświetlenie aut.");
-                Console.WriteLine("7. Wyjście");
-                Console.Write("Wybierz opcję (1-6): ");
+                Console.WriteLine("7. Wyścig aut.");
+                Console.WriteLine("8. Wyjście");
+                Console.Write("Wybierz opcję (1-8): ");
                 int choice = int.Parse(Console.ReadLine());
 
                 switch (choice)
@@ -46,6 +47,9 @@ namespace PROJEKT
                         ViewCars();
                         break;
                     case 7:
+                        Race();
+                        break;
+                    case 8:
                         return;
                     default:
                         Console.WriteLine("Niepoprawny wybór!");
@@ -373,7 +377,48 @@ namespace PROJEKT
                 Console.WriteLine();
             }
             WaitForKeyPress();
+            
         }
+        static void Race()
+        {
+            Random random = new Random();
+
+            
+            int carIndex1 = random.Next(CarList.Count);
+            int carIndex2 = random.Next(CarList.Count);
+
+            
+            while (carIndex1 == carIndex2)
+            {
+                carIndex2 = random.Next(CarList.Count);
+            }
+
+            var car1 = CarList[carIndex1];
+            var car2 = CarList[carIndex2];
+
+            
+            Console.WriteLine("Rozpoczynamy wyścig!");
+            Console.WriteLine($"Samochód 1: {car1.Model} z {car1.CarInfo.HorsePower} KM");
+            Console.WriteLine($"Samochód 2: {car2.Model} z {car2.CarInfo.HorsePower} KM");
+
+            
+            if (car1.CarInfo.HorsePower > car2.CarInfo.HorsePower)
+            {
+                Console.WriteLine($"{car1.Model} wygrał wyścig!");
+            }
+            else if (car1.CarInfo.HorsePower < car2.CarInfo.HorsePower)
+            {
+                Console.WriteLine($"{car2.Model} wygrał wyścig!");
+            }
+            else
+            {
+                Console.WriteLine("Wyścig zakończył się remisem!");
+            }
+
+            
+            WaitForKeyPress();
+        }
+
     }
 
 
