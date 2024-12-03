@@ -74,39 +74,89 @@ namespace PROJEKT
         {
             Console.WriteLine("Podaj cenę samochodu oraz okres kredytowania.");
 
-            Console.Write("Podaj cenę samochodu: ");
-            double carPrice = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Podaj cenę samochodu (PLN): ");
+                double carPrice = Convert.ToDouble(Console.ReadLine());
 
-            Console.Write("Podaj okres kredytowania w miesiącach: ");
-            int loanTerm = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Podaj okres kredytowania w miesiącach: ");
+                int loanTerm = Convert.ToInt32(Console.ReadLine());
 
-            double interestRate = 0;
+                
+                Console.Write("Podaj wysokość wkładu własnego (PLN): ");
+                double downPayment = Convert.ToDouble(Console.ReadLine());
 
-            if (loanTerm <= 6)
-            {
-                interestRate = 0.02;
-            }
-            else if (loanTerm <= 12)
-            {
-                interestRate = 0.04;
-            }
-            else if (loanTerm <= 24)
-            {
-                interestRate = 0.06;
-            }
-            else
-            {
-                interestRate = 0.10;
-            }
+                
+                Console.Write("Podaj swoją ocenę kredytową (0-10, gdzie 10 to najwyższa): ");
+                double creditScore = Convert.ToDouble(Console.ReadLine());
 
-            double monthlyInterestRate = interestRate / 12;
-            double loanAmount = carPrice;
-            double monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - Math.Pow(1 + monthlyInterestRate, -loanTerm));
+                
+                Console.Write("Czy chcesz dodać koszt ubezpieczenia do kredytu? (tak/nie): ");
+                string insuranceInput = Console.ReadLine().ToLower();
+                double insuranceCost = 0;
 
-            Console.WriteLine($"Dla ceny {carPrice} PLN i okresu {loanTerm} miesięcy, oprocentowanie wynosi {interestRate * 100}%.");
-            Console.WriteLine($"Miesięczna rata kredytu wynosi: {Math.Round(monthlyPayment, 2)} PLN.");
+                if (insuranceInput == "tak")
+                {
+                    Console.Write("Podaj koszt ubezpieczenia rocznego (PLN): ");
+                    insuranceCost = Convert.ToDouble(Console.ReadLine());
+                }
 
-            WaitForKeyPress();
+               
+                Console.Write("Czy są dodatkowe opłaty za kredyt? (tak/nie): ");
+                string additionalFeesInput = Console.ReadLine().ToLower();
+                double additionalFees = 0;
+
+                if (additionalFeesInput == "tak")
+                {
+                    Console.Write("Podaj kwotę dodatkowych opłat (PLN): ");
+                    additionalFees = Convert.ToDouble(Console.ReadLine());
+                }
+
+                
+                double totalLoanAmount = carPrice - downPayment + insuranceCost + additionalFees;
+
+                
+                double interestRate = 0;
+
+                if (loanTerm <= 6)
+                {
+                    interestRate = 0.02;
+                }
+                else if (loanTerm <= 12)
+                {
+                    interestRate = 0.04;
+                }
+                else if (loanTerm <= 24)
+                {
+                    interestRate = 0.06;
+                }
+                else
+                {
+                    interestRate = 0.10;
+                }
+
+                
+                if (creditScore < 5)
+                {
+                    interestRate += 0.02;
+                }
+                else if (creditScore >= 8)
+                {
+                    interestRate -= 0.01; 
+                }
+
+
+    
+                double monthlyInterestRate = interestRate / 12;
+                double monthlyPayment = (totalLoanAmount * monthlyInterestRate) / (1 - Math.Pow(1 + monthlyInterestRate, -loanTerm));
+
+                Console.WriteLine($"\nPodsumowanie:");
+                Console.WriteLine($"Cena samochodu: {carPrice} PLN");
+                Console.WriteLine($"Wkład własny: {downPayment} PLN");
+                Console.WriteLine($"Okres kredytowania: {loanTerm} miesięcy");
+                Console.WriteLine($"Ocena kredytowa: {creditScore}");
+                Console.WriteLine($"Oprocentowanie roczne: {interestRate * 100}%");
+                Console.WriteLine($"Kwota kredytu: {totalLoanAmount} PLN");
+                Console.WriteLine($"Miesięczna rata kredytu wynosi: {Math.Round(monthlyPayment, 2)} PLN");
+                Console.ReadKey();
         }
 
         static void PowerUnitConverter()
