@@ -42,6 +42,7 @@ namespace PROJEKT
                         FuelCalculations();
                         break;
                     case 6:
+
                         return;
                     default:
                         Console.WriteLine("Niepoprawny wybór!");

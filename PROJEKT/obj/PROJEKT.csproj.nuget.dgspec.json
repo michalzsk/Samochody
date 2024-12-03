@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\PROJEKT.csproj": {}
+    "C:\\Users\\antek\\Documents\\5C\\Antoni Prałat\\Samochody\\PROJEKT\\PROJEKT.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\PROJEKT.csproj": {
+    "C:\\Users\\antek\\Documents\\5C\\Antoni Prałat\\Samochody\\PROJEKT\\PROJEKT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\PROJEKT.csproj",
+        "projectUniqueName": "C:\\Users\\antek\\Documents\\5C\\Antoni Prałat\\Samochody\\PROJEKT\\PROJEKT.csproj",
         "projectName": "PROJEKT",
-        "projectPath": "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\PROJEKT.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Documents\\5C\\Projekt\\PROJEKT\\obj\\",
+        "projectPath": "C:\\Users\\antek\\Documents\\5C\\Antoni Prałat\\Samochody\\PROJEKT\\PROJEKT.csproj",
+        "packagesPath": "C:\\Users\\antek\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\antek\\Documents\\5C\\Antoni Prałat\\Samochody\\PROJEKT\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\antek\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,6 +45,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
