@@ -22,9 +22,11 @@ namespace PROJEKT
                 Console.WriteLine("3. Przelicznik jednostek (kW <-> KM)");
                 Console.WriteLine("4. Przelicznik km <-> mil");
                 Console.WriteLine("5. Obliczenia związane z paliwem");
-                Console.WriteLine("6. Logowanie");
-                Console.WriteLine("7. Wyjście");
-                Console.Write("Wybierz opcję (1-7): ");
+                Console.WriteLine("6. Wyświetlenie aut.");
+                Console.WriteLine("7. Wyścig aut.");
+                Console.WriteLine("8. Wyjście");
+                Console.WriteLine("9. Logowanie");
+                Console.Write("Wybierz opcję (1-9): ");
                 int choice = int.Parse(Console.ReadLine());
 
                 switch (choice)
@@ -44,10 +46,10 @@ namespace PROJEKT
                     case 5:
                         FuelCalculations();
                         break;
-                    case 6:
+                    case 9:
                         LoginUser();
                         break;
-                    case 7:
+                    case 8:
 
                         return;
                     default:
@@ -70,10 +72,6 @@ namespace PROJEKT
             }
 
             WaitForKeyPress();
-        }
-        static void ViewCars()
-        {
-
         }
         static void LoginUser()
         {
