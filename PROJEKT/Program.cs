@@ -27,12 +27,27 @@ namespace PROJEKT
                 Console.WriteLine("7. Wyścig aut.");
                 Console.WriteLine("8. Kalkulator E30");
                 Console.WriteLine("9.Warsztat");
+                Console.WriteLine("10. Wyjście");
                 Console.WriteLine("10. Przegląd");
                 Console.WriteLine("11. Filtruj samochody");
                 Console.WriteLine("12. Wyjście");
                 Console.WriteLine("13. Logowanie");
-                Console.Write("Wybierz opcję (1-8): ");
-                int choice = int.Parse(Console.ReadLine());
+                int choice = 0;
+
+                while (true)
+                {
+                    Console.Write("Wybierz opcję (1-13): ");
+                    string input = Console.ReadLine();
+
+                    if (int.TryParse(input, out choice) && choice >= 1 && choice <= 13)
+                    {
+                        break; 
+                    }
+                    else
+                    {
+                        Console.WriteLine("Błąd: Wprowadź liczbę od 1 do 13.");
+                    }
+                }
 
                 switch (choice)
                 {
@@ -161,6 +176,7 @@ namespace PROJEKT
         static void CalculateEthanolPercentage()
         {
 
+
             Console.Write("Podaj wielkość baku (w litrach): ");
             double bakSize = double.Parse(Console.ReadLine());
 
@@ -187,7 +203,6 @@ namespace PROJEKT
             Console.WriteLine($"Aby uzyskać {desiredEthanolPercentage}% etanolu w paliwie:");
             Console.WriteLine($"Dodaj {ethanolToAdd:F2} litrów etanolu.");
             Console.WriteLine($"Dodaj {fuelToAdd:F2} litrów paliwa.");
-            WaitForKeyPress();
 
         }
         static void CalculateLoan()
@@ -474,8 +489,9 @@ namespace PROJEKT
             CarList.Add(new Volkswagen(new CarInfo(2.0, "srebrny", 150, 210, "2007-teraz", "diesel", 129900, 6.0, 5.5, 1200), "Tiguan"));
             CarList.Add(new Opel(new CarInfo(1.6, "czerwony", 120, 190, "1991-teraz", "benzyna", 87900, 6.5, 5.5, 1100), "Astra"));
             CarList.Add(new Opel(new CarInfo(2.0, "żółty", 170, 210, "2008-2023", "diesel", 139900, 7.0, 6.0, 1200), "Insignia"));
-            CarList.Add(new Fiat(new CarInfo(1.4, "błękitny", 95, 180, "1987-teraz", "benzyna", 67900, 7.0, 6.5, 1000), "Tipo")) ;
+            CarList.Add(new Fiat(new CarInfo(1.4, "błękitny", 95, 180, "1987-teraz", "benzyna", 67900, 7.0, 6.5, 1000), "Tipo"));
             CarList.Add(new Fiat(new CarInfo(1.6, "czarny", 130, 200, "2014-2024", "diesel", 89900, 6.0, 5.3, 1100), "500X"));
+
         }
         static void ViewCars()
         {
