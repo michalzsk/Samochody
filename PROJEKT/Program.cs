@@ -527,33 +527,134 @@ namespace PROJEKT
 
             var car1 = CarList[carIndex1];
             var car2 = CarList[carIndex2];
-
+            int KM1 = car1.CarInfo.HorsePower;
+            int KM2 = car2.CarInfo.HorsePower;
+            int skibidivar2;
+            int carexplosionchance1=0;
+            int carexplosionchance2=0;
+            Console.WriteLine("Czy pierwsze auto ma etanol?\n 1-TAK\n2-NIE");
+            int skibidivar = Int32.Parse(Console.ReadLine());
+            if(skibidivar == 1)
+            {
+                Console.WriteLine("Ile procent całościowo to etanol?");
+                skibidivar2 = Int32.Parse(Console.ReadLine());
+                if (skibidivar2 >= 50)
+                {
+                    Console.WriteLine("Toś poleciał");
+                    carexplosionchance1 = 100;
+                }
+                else
+                {
+                    Console.WriteLine("Powodzenia w wyścigu");
+                    carexplosionchance1 = skibidivar2 * 2;
+                    if (skibidivar2 < 10)
+                    {
+                        KM1 = KM1*((skibidivar2/10)+1);
+                    }
+                    else
+                    {
+                        KM1 = KM1*(skibidivar2/10);
+                    }
+                }
+            }
+            Console.WriteLine("Czy drugie auto ma etanol?\n 1-TAK\n2-NIE");
+            skibidivar = Int32.Parse(Console.ReadLine());
+            if (skibidivar == 1)
+            {
+                Console.WriteLine("Ile procent całościowo to etanol?");
+                skibidivar2 = Int32.Parse(Console.ReadLine());
+                if (skibidivar2 >= 50)
+                {
+                    Console.WriteLine("Toś poleciał");
+                    carexplosionchance2 = 100;
+                }
+                else
+                {
+                    Console.WriteLine("Powodzenia w wyścigu");
+                    carexplosionchance2 = skibidivar2 * 2;
+                    if (skibidivar2 < 10)
+                    {
+                        KM2 = KM2 * ((skibidivar2 / 10) + 1);
+                    }
+                    else
+                    {
+                        KM2 = KM2 * (skibidivar2 / 10);
+                    }
+                }
+            }
+            
 
             Console.WriteLine("Rozpoczynamy wyścig!");
             Console.WriteLine($"Samochód 1: {car1.Model} z {car1.CarInfo.HorsePower} KM");
             Console.WriteLine($"Samochód 2: {car2.Model} z {car2.CarInfo.HorsePower} KM");
 
+            bool explode1 = false;
+            bool explode2 = false;
+            if (explosionCarCheck(carexplosionchance1))
+            {
+                Console.WriteLine($"{car1.Model} eksplodował :3");
+                explode1 = true;
+            }
+            if (explosionCarCheck(carexplosionchance2))
+            {
+                Console.WriteLine($"{car2.Model} eksplodował :3");
+                explode2 = true;
+            }
 
-            if (car1.CarInfo.HorsePower > car2.CarInfo.HorsePower)
+            if (KM1 > KM2 && !explode1)
             {
                 Console.WriteLine($"{car1.Model} wygrał wyścig!");
             }
-            else if (car1.CarInfo.HorsePower < car2.CarInfo.HorsePower)
+            else if (KM1 < KM2 && !explode2)
             {
                 Console.WriteLine($"{car2.Model} wygrał wyścig!");
             }
+            else if (explode1 && !explode2)
+            {
+                Console.WriteLine($"{car2.Model} wygrał wyścig!");
+            }
+            else if (!explode1 && explode2)
+            {
+                Console.WriteLine($"{car1.Model} wygrał wyścig!");
+            }
             else
             {
-                Console.WriteLine("Wyścig zakończył się remisem!");
+                Console.WriteLine("Wyścig zakończył się remisem");
             }
 
 
             WaitForKeyPress();
         }
+        static bool explosionCarCheck(int chance)
+        {
+            Random rng = new Random();
+            int nasienie = rng.Next(1, 101);
+            int i = 1;
+            int bomba;
+            bool wybuch = false;
+            while (i <= chance)
+            {
+                bomba = rng.Next(1, 101);
+                if (bomba == nasienie)
+                {
+                    wybuch = true;
+                    break;
+                }
+                i++;
+            }
+            if (wybuch)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
 
-
+   
     class User
     {
         public bool IsRegistered = false;
