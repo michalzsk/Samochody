@@ -23,11 +23,11 @@ namespace PROJEKT
                 Console.WriteLine("6. Wyświetlenie aut.");
                 Console.WriteLine("7. Wyścig aut.");
                 Console.WriteLine("8. Kalkulator E30");
-                Console.WriteLine("9.Warsztat");
+                Console.WriteLine("9. Warsztat");
                 Console.WriteLine("10. Przegląd");
                 Console.WriteLine("11. Filtruj samochody");
-                Console.WriteLine("10. Wyjście");
-                Console.Write("Wybierz opcję (1-8): ");
+                Console.WriteLine("12. Wyjście");
+                Console.Write("Wybierz opcję (1-12): ");
                 int choice = int.Parse(Console.ReadLine());
 
                 switch (choice)
