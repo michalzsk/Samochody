@@ -468,6 +468,7 @@ namespace PROJEKT
             CarList.Add(new Fiat(new CarInfo(1.6, "czarny", 130, 200, 2020, "diesel", 89900, 6.0, 5.3, 1100), "500X"));
 
         }
+        
         static void FilterCars()
         {
             Console.WriteLine("Filtruj samochody po:");
@@ -531,7 +532,6 @@ namespace PROJEKT
             WaitForKeyPress();
         }
 
-        // Add this method to calculate remaining mileage to inspection
         static void CalculateInspection()
         {
             Console.WriteLine("Podaj przebieg samochodu (w km): ");
@@ -543,6 +543,7 @@ namespace PROJEKT
             Console.WriteLine($"Pozostało {remainingMileage} km do kolejnego przeglądu technicznego.");
             WaitForKeyPress();
         }
+        
         static void ViewCars()
         {
             foreach (var car in CarList)
