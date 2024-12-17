@@ -25,9 +25,13 @@ namespace PROJEKT
                 Console.WriteLine("5. Obliczenia związane z paliwem");
                 Console.WriteLine("6. Wyświetlenie aut.");
                 Console.WriteLine("7. Wyścig aut.");
-                Console.WriteLine("8. Wyjście");
-                Console.WriteLine("9. Logowanie");
-                Console.Write("Wybierz opcję (1-9): ");
+                Console.WriteLine("8. Kalkulator E30");
+                Console.WriteLine("9.Warsztat");
+                Console.WriteLine("10. Przegląd");
+                Console.WriteLine("11. Filtruj samochody");
+                Console.WriteLine("12. Wyjście");
+                Console.WriteLine("13. Logowanie");
+                Console.Write("Wybierz opcję (1-8): ");
                 int choice = int.Parse(Console.ReadLine());
 
                 switch (choice)
@@ -47,7 +51,7 @@ namespace PROJEKT
                     case 5:
                         FuelCalculations();
                         break;
-                    case 9:
+                    case 13:
                         LoginUser();
                         break;
                     case 6:
@@ -57,12 +61,83 @@ namespace PROJEKT
                         Race();
                         break;
                     case 8:
+                        CalculateEthanolPercentage();
+                        break;
+                    case 9:
+                        WorkshopMenu();
+                        break;
+                    case 10:
+                        CalculateInspection();
+                        break;
+                    case 11:
+                        FilterCars();
+                        break; 
+                    case 12:
                         return;
                     default:
                         Console.WriteLine("Niepoprawny wybór!");
                         break;
                 }
             }
+        }
+        static void WorkshopMenu()
+        {
+            Console.WriteLine("Wybierz samochód do modyfikacji:");
+            for (int i = 0; i < CarList.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {CarList[i].GetType().Name} {CarList[i].Model}, Cena: {CarList[i].CarInfo.Price} PLN");
+            }
+
+            Console.Write("Podaj numer samochodu: ");
+            int carIndex = int.Parse(Console.ReadLine()) - 1;
+
+            if (carIndex < 0 || carIndex >= CarList.Count)
+            {
+                Console.WriteLine("Nieprawidłowy wybór samochodu.");
+                WaitForKeyPress();
+                return;
+            }
+
+            Car selectedCar = CarList[carIndex];
+            Console.WriteLine($"Wybrałeś: {selectedCar.GetType().Name} {selectedCar.Model}");
+
+            Console.WriteLine("Wybierz modyfikację:");
+            Console.WriteLine("1. Spoiler (Cena: 2000 PLN)");
+            Console.WriteLine("2. Wydech sportowy (Cena: 3000 PLN)");
+            Console.WriteLine("3. Folia ochronna (Cena: 1500 PLN)");
+            Console.WriteLine("4. Powrót do menu");
+
+            Console.Write("Twój wybór: ");
+            int modChoice = int.Parse(Console.ReadLine());
+
+            double modPrice = 0;
+            string modName = "";
+
+            switch (modChoice)
+            {
+                case 1:
+                    modPrice = 2000;
+                    modName = "Spoiler";
+                    break;
+                case 2:
+                    modPrice = 3000;
+                    modName = "Wydech sportowy";
+                    break;
+                case 3:
+                    modPrice = 1500;
+                    modName = "Folia ochronna";
+                    break;
+                case 4:
+                    return;
+                default:
+                    Console.WriteLine("Nieprawidłowy wybór modyfikacji.");
+                    WaitForKeyPress();
+                    return;
+            }
+
+            selectedCar.CarInfo.Price += modPrice;
+            Console.WriteLine($"Dodano modyfikację: {modName}. Nowa cena samochodu: {selectedCar.CarInfo.Price} PLN");
+            WaitForKeyPress();
         }
         static void RegisterUser()
         {
@@ -89,6 +164,38 @@ namespace PROJEKT
             WaitForKeyPress();
         }
 
+        static void CalculateEthanolPercentage()
+        {
+
+
+            Console.Write("Podaj wielkość baku (w litrach): ");
+            double bakSize = double.Parse(Console.ReadLine());
+
+            Console.Write("Podaj ilość paliwa w baku (w litrach): ");
+            double fuelInTank = double.Parse(Console.ReadLine());
+
+            Console.Write("Podaj procentową ilość etanolu w paliwie (np. 10 dla 10%): ");
+            double desiredEthanolPercentage = double.Parse(Console.ReadLine());
+
+
+            double availableSpace = bakSize - fuelInTank;
+
+            if (availableSpace <= 0)
+            {
+                Console.WriteLine("Bak jest już pełny lub podano niepoprawne dane.");
+                return;
+            }
+
+
+            double ethanolToAdd = (desiredEthanolPercentage / 100) * availableSpace;
+            double fuelToAdd = availableSpace - ethanolToAdd;
+
+
+            Console.WriteLine($"Aby uzyskać {desiredEthanolPercentage}% etanolu w paliwie:");
+            Console.WriteLine($"Dodaj {ethanolToAdd:F2} litrów etanolu.");
+            Console.WriteLine($"Dodaj {fuelToAdd:F2} litrów paliwa.");
+
+        }
         static void CalculateLoan()
         {
             Console.WriteLine("Podaj cenę samochodu oraz okres kredytowania.");
@@ -377,6 +484,82 @@ namespace PROJEKT
             CarList.Add(new Fiat(new CarInfo(1.6, "czarny", 130, 200, 2020, "diesel", 89900, 6.0, 5.3, 1100), "500X"));
 
         }
+        
+        static void FilterCars()
+        {
+            Console.WriteLine("Filtruj samochody po:");
+            Console.WriteLine("1. Typ paliwa");
+            Console.WriteLine("2. Kolor");
+            Console.WriteLine("3. Przedział cenowy");
+            Console.WriteLine("4. Moc silnika (KM)");
+            Console.Write("Wybierz kryterium (1-4): ");
+
+            int filterChoice = int.Parse(Console.ReadLine());
+            List<Car> filteredCars = new List<Car>();
+
+            switch (filterChoice)
+            {
+                case 1:
+                    Console.Write("Podaj typ paliwa (benzyna/diesel/elektryczne): ");
+                    string fuelType = Console.ReadLine().ToLower();
+                    filteredCars = CarList.Where(car => car.CarInfo.FuelType.ToLower() == fuelType).ToList();
+                    break;
+
+                case 2:
+                    Console.Write("Podaj kolor samochodu: ");
+                    string color = Console.ReadLine().ToLower();
+                    filteredCars = CarList.Where(car => car.CarInfo.Color.ToLower() == color).ToList();
+                    break;
+
+                case 3:
+                    Console.Write("Podaj minimalną cenę (PLN): ");
+                    double minPrice = double.Parse(Console.ReadLine());
+                    Console.Write("Podaj maksymalną cenę (PLN): ");
+                    double maxPrice = double.Parse(Console.ReadLine());
+                    filteredCars = CarList.Where(car => car.CarInfo.Price >= minPrice && car.CarInfo.Price <= maxPrice).ToList();
+                    break;
+
+                case 4:
+                    Console.Write("Podaj minimalną moc silnika (KM): ");
+                    int minHorsePower = int.Parse(Console.ReadLine());
+                    Console.Write("Podaj maksymalną moc silnika (KM): ");
+                    int maxHorsePower = int.Parse(Console.ReadLine());
+                    filteredCars = CarList.Where(car => car.CarInfo.HorsePower >= minHorsePower && car.CarInfo.HorsePower <= maxHorsePower).ToList();
+                    break;
+
+                default:
+                    Console.WriteLine("Niepoprawny wybór!");
+                    return;
+            }
+
+            if (filteredCars.Count == 0)
+            {
+                Console.WriteLine("Brak samochodów spełniających podane kryteria.");
+            }
+            else
+            {
+                Console.WriteLine("Znalezione samochody:");
+                foreach (var car in filteredCars)
+                {
+                    Console.WriteLine($"Marka: {car.GetType().Name}, Model: {car.Model}, Cena: {car.CarInfo.Price} PLN");
+                }
+            }
+
+            WaitForKeyPress();
+        }
+
+        static void CalculateInspection()
+        {
+            Console.WriteLine("Podaj przebieg samochodu (w km): ");
+            int currentMileage = int.Parse(Console.ReadLine());
+            const int inspectionInterval = 15000;
+
+            int remainingMileage = inspectionInterval - (currentMileage % inspectionInterval);
+
+            Console.WriteLine($"Pozostało {remainingMileage} km do kolejnego przeglądu technicznego.");
+            WaitForKeyPress();
+        }
+        
         static void ViewCars()
         {
             foreach (var car in CarList)
