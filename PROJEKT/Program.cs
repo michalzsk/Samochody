@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Metrics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,6 +9,8 @@ namespace PROJEKT
 {
     internal class Program
     {
+        static User user;
+
         static void Main(string[] args)
         {
             initalizeCars();
@@ -23,12 +26,28 @@ namespace PROJEKT
                 Console.WriteLine("6. Wyświetlenie aut.");
                 Console.WriteLine("7. Wyścig aut.");
                 Console.WriteLine("8. Kalkulator E30");
-                Console.WriteLine("9. Warsztat");
+                Console.WriteLine("9.Warsztat");
+                Console.WriteLine("10. Wyjście");
                 Console.WriteLine("10. Przegląd");
                 Console.WriteLine("11. Filtruj samochody");
                 Console.WriteLine("12. Wyjście");
-                Console.Write("Wybierz opcję (1-12): ");
-                int choice = int.Parse(Console.ReadLine());
+                Console.WriteLine("13. Logowanie");
+                int choice = 0;
+
+                while (true)
+                {
+                    Console.Write("Wybierz opcję (1-13): ");
+                    string input = Console.ReadLine();
+
+                    if (int.TryParse(input, out choice) && choice >= 1 && choice <= 13)
+                    {
+                        break; 
+                    }
+                    else
+                    {
+                        Console.WriteLine("Błąd: Wprowadź liczbę od 1 do 13.");
+                    }
+                }
 
                 switch (choice)
                 {
@@ -47,6 +66,9 @@ namespace PROJEKT
                     case 5:
                         FuelCalculations();
                         break;
+                    case 13:
+                        LoginUser();
+                        break;
                     case 6:
                         ViewCars();
                         break;
@@ -60,12 +82,6 @@ namespace PROJEKT
                         WorkshopMenu();
                         break;
                     case 10:
-                        CalculateInspection();
-                        break;
-                    case 11:
-                        FilterCars();
-                        break; 
-                    case 12:
                         return;
                     default:
                         Console.WriteLine("Niepoprawny wybór!");
@@ -134,7 +150,7 @@ namespace PROJEKT
         }
         static void RegisterUser()
         {
-            User user = new User();
+            user = new User();
             user.Register();
             if (user.IsRegistered)
             {
@@ -145,6 +161,15 @@ namespace PROJEKT
                 Console.WriteLine("Nie udało się zarejestrować użytkownika. Spróbuj ponownie.");
             }
 
+            WaitForKeyPress();
+        }
+        static void LoginUser()
+        {
+            Console.WriteLine("Podaj adres email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Podaj hasło");
+            string password = Console.ReadLine();
+            user.Login(email, password);
             WaitForKeyPress();
         }
 
@@ -447,101 +472,26 @@ namespace PROJEKT
         static List<Car> CarList = new();
         static public void initalizeCars()
         {
-            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, 2020, "diesel", 139900, 9.0, 6.3, 1071), "Exeo"));
-            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, 2020, "diesel", 139900, 9.0, 6.3, 1071), "Tarraco"));
-            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 204, 253, 2018, "benzyna", 239900, 12.0, 8.1, 1200), "A5"));
-            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 245, 265, 2021, "benzyna", 269900, 11.5, 7.2, 1350), "A4"));
-            CarList.Add(new Audi(new CarInfo(2.5, "srebrny", 185, 245, 2020, "diesel", 249900, 7.0, 5.9, 1250), "Q5"));
-            CarList.Add(new Audi(new CarInfo(2.0, "biały", 190, 230, 2022, "benzyna", 279900, 9.0, 7.5, 1300), "Q7"));
-            CarList.Add(new BMW(new CarInfo(2.0, "niebieski", 192, 250, 2019, "diesel", 219900, 8.5, 6.5, 1350), "X3"));
-            CarList.Add(new BMW(new CarInfo(3.0, "czerwony", 300, 280, 2022, "benzyna", 399900, 12.5, 9.3, 1500), "M4"));
-            CarList.Add(new BMW(new CarInfo(3.0, "czarny", 250, 260, 2021, "diesel", 269900, 9.5, 7.8, 1400), "X5"));
-            CarList.Add(new Mercedes(new CarInfo(2.0, "złoty", 210, 250, 2020, "benzyna", 239900, 8.5, 6.2, 1320), "C-Class"));
-            CarList.Add(new Mercedes(new CarInfo(3.0, "biały", 300, 270, 2022, "diesel", 359900, 10.0, 8.5, 1450), "E-Class"));
-            CarList.Add(new Mercedes(new CarInfo(2.5, "czarny", 260, 260, 2021, "benzyna", 299900, 9.0, 7.0, 1400), "S-Class"));
-            CarList.Add(new Volkswagen(new CarInfo(1.5, "zielony", 150, 200, 2020, "benzyna", 109900, 6.5, 5.8, 1150), "Golf"));
-            CarList.Add(new Volkswagen(new CarInfo(2.0, "niebieski", 180, 220, 2022, "diesel", 139900, 7.5, 6.2, 1250), "Passat"));
-            CarList.Add(new Volkswagen(new CarInfo(2.0, "srebrny", 150, 210, 2020, "diesel", 129900, 6.0, 5.5, 1200), "Tiguan"));
-            CarList.Add(new Opel(new CarInfo(1.6, "czerwony", 120, 190, 2019, "benzyna", 87900, 6.5, 5.5, 1100), "Astra"));
-            CarList.Add(new Opel(new CarInfo(2.0, "żółty", 170, 210, 2021, "diesel", 139900, 7.0, 6.0, 1200), "Insignia"));
-            CarList.Add(new Fiat(new CarInfo(1.4, "błękitny", 100, 180, 2018, "benzyna", 67900, 7.0, 6.5, 1000), "Tipo"));
-            CarList.Add(new Fiat(new CarInfo(1.6, "czarny", 130, 200, 2020, "diesel", 89900, 6.0, 5.3, 1100), "500X"));
+            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, "2009-2011", "diesel", 139900, 9.0, 6.3, 1071), "Exeo"));
+            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, "2018-teraz", "diesel", 139900, 9.0, 6.3, 1071), "Tarraco"));
+            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 204, 253, "2007-teraz", "benzyna", 239900, 12.0, 8.1, 1200), "A5"));
+            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 245, 265, "1995-2024", "benzyna", 269900, 11.5, 7.2, 1350), "A4"));
+            CarList.Add(new Audi(new CarInfo(2.5, "srebrny", 185, 245, "2008-teraz", "diesel", 249900, 7.0, 5.9, 1250), "Q5"));
+            CarList.Add(new Audi(new CarInfo(2.0, "biały", 190, 230, "2005-teraz", "benzyna", 279900, 9.0, 7.5, 1300), "Q7"));
+            CarList.Add(new BMW(new CarInfo(2.0, "niebieski", 192, 250, "2003-teraz", "diesel", 219900, 8.5, 6.5, 1350), "X3"));
+            CarList.Add(new BMW(new CarInfo(3.0, "czerwony", 300, 280, "2014-2021", "benzyna", 399900, 12.5, 9.3, 1500), "M4"));
+            CarList.Add(new BMW(new CarInfo(3.0, "czarny", 250, 260, "2000-teraz", "diesel", 269900, 9.5, 7.8, 1400), "X5"));
+            CarList.Add(new Mercedes(new CarInfo(2.0, "złoty", 210, 250, "1993-teraz", "benzyna", 239900, 8.5, 6.2, 1320), "C-Class"));
+            CarList.Add(new Mercedes(new CarInfo(3.0, "biały", 300, 270, "1993-teraz", "diesel", 359900, 10.0, 8.5, 1450), "E-Class"));
+            CarList.Add(new Mercedes(new CarInfo(2.5, "czarny", 260, 260, "1972-teraz", "benzyna", 299900, 9.0, 7.0, 1400), "S-Class"));
+            CarList.Add(new Volkswagen(new CarInfo(1.5, "zielony", 150, 200, "1974-teraz", "benzyna", 109900, 6.5, 5.8, 1150), "Golf"));
+            CarList.Add(new Volkswagen(new CarInfo(2.0, "niebieski", 180, 220, "1973-teraz", "diesel", 139900, 7.5, 6.2, 1250), "Passat"));
+            CarList.Add(new Volkswagen(new CarInfo(2.0, "srebrny", 150, 210, "2007-teraz", "diesel", 129900, 6.0, 5.5, 1200), "Tiguan"));
+            CarList.Add(new Opel(new CarInfo(1.6, "czerwony", 120, 190, "1991-teraz", "benzyna", 87900, 6.5, 5.5, 1100), "Astra"));
+            CarList.Add(new Opel(new CarInfo(2.0, "żółty", 170, 210, "2008-2023", "diesel", 139900, 7.0, 6.0, 1200), "Insignia"));
+            CarList.Add(new Fiat(new CarInfo(1.4, "błękitny", 95, 180, "1987-teraz", "benzyna", 67900, 7.0, 6.5, 1000), "Tipo"));
+            CarList.Add(new Fiat(new CarInfo(1.6, "czarny", 130, 200, "2014-2024", "diesel", 89900, 6.0, 5.3, 1100), "500X"));
 
-        }
-        static void FilterCars()
-        {
-            Console.WriteLine("Filtruj samochody po:");
-            Console.WriteLine("1. Typ paliwa");
-            Console.WriteLine("2. Kolor");
-            Console.WriteLine("3. Przedział cenowy");
-            Console.WriteLine("4. Moc silnika (KM)");
-            Console.Write("Wybierz kryterium (1-4): ");
-
-            int filterChoice = int.Parse(Console.ReadLine());
-            List<Car> filteredCars = new List<Car>();
-
-            switch (filterChoice)
-            {
-                case 1:
-                    Console.Write("Podaj typ paliwa (benzyna/diesel/elektryczne): ");
-                    string fuelType = Console.ReadLine().ToLower();
-                    filteredCars = CarList.Where(car => car.CarInfo.FuelType.ToLower() == fuelType).ToList();
-                    break;
-
-                case 2:
-                    Console.Write("Podaj kolor samochodu: ");
-                    string color = Console.ReadLine().ToLower();
-                    filteredCars = CarList.Where(car => car.CarInfo.Color.ToLower() == color).ToList();
-                    break;
-
-                case 3:
-                    Console.Write("Podaj minimalną cenę (PLN): ");
-                    double minPrice = double.Parse(Console.ReadLine());
-                    Console.Write("Podaj maksymalną cenę (PLN): ");
-                    double maxPrice = double.Parse(Console.ReadLine());
-                    filteredCars = CarList.Where(car => car.CarInfo.Price >= minPrice && car.CarInfo.Price <= maxPrice).ToList();
-                    break;
-
-                case 4:
-                    Console.Write("Podaj minimalną moc silnika (KM): ");
-                    int minHorsePower = int.Parse(Console.ReadLine());
-                    Console.Write("Podaj maksymalną moc silnika (KM): ");
-                    int maxHorsePower = int.Parse(Console.ReadLine());
-                    filteredCars = CarList.Where(car => car.CarInfo.HorsePower >= minHorsePower && car.CarInfo.HorsePower <= maxHorsePower).ToList();
-                    break;
-
-                default:
-                    Console.WriteLine("Niepoprawny wybór!");
-                    return;
-            }
-
-            if (filteredCars.Count == 0)
-            {
-                Console.WriteLine("Brak samochodów spełniających podane kryteria.");
-            }
-            else
-            {
-                Console.WriteLine("Znalezione samochody:");
-                foreach (var car in filteredCars)
-                {
-                    Console.WriteLine($"Marka: {car.GetType().Name}, Model: {car.Model}, Cena: {car.CarInfo.Price} PLN");
-                }
-            }
-
-            WaitForKeyPress();
-        }
-
-        
-        static void CalculateInspection()
-        {
-            Console.WriteLine("Podaj przebieg samochodu (w km): ");
-            int currentMileage = int.Parse(Console.ReadLine());
-            const int inspectionInterval = 15000;
-
-            int remainingMileage = inspectionInterval - (currentMileage % inspectionInterval);
-
-            Console.WriteLine($"Pozostało {remainingMileage} km do kolejnego przeglądu technicznego.");
-            WaitForKeyPress();
         }
         static void ViewCars()
         {
@@ -610,7 +560,11 @@ namespace PROJEKT
         private string Email;
         private string Password;
         private byte[] Salt;
-
+        private bool isLoggedIn = false;
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Email: {Email}\n Password: {Password} \n Salt: {Salt}");
+        }
         public void Print()
         {
             Console.WriteLine("Rejestracja zakończona pomyślnie.");
@@ -620,35 +574,42 @@ namespace PROJEKT
         public void Register()
         {
             string password;
-            while (true)
+            if (IsRegistered == false)
             {
-                Console.WriteLine("Podaj email:");
-                Email = Console.ReadLine();
-                if (IsEmailCorrect(Email)) break;
-                Console.WriteLine("Niepoprawny email.");
-            }
+                while (true)
+                {
+                    Console.WriteLine("Podaj email:");
+                    Email = Console.ReadLine();
+                    if (IsEmailCorrect(Email)) break;
+                    Console.WriteLine("Niepoprawny email.");
+                }
 
-            while (true)
+                while (true)
+                {
+                    Console.WriteLine("Podaj hasło (min. 8 znaków, zawierać ma dużą literę, cyfrę i znak specjalny):");
+                    password = Console.ReadLine();
+                    if (password.Length >= 8 && HasSpecialChars(password) && HasUpperCase(password) && HasNumber(password) && password.Length < 40) break;
+                    Console.WriteLine("Hasło nie spełnia wymagań.");
+                }
+
+                Salt = new byte[16];
+                using (var rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(Salt);
+                }
+                Password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                    password,
+                    Salt,
+                    KeyDerivationPrf.HMACSHA256,
+                    10000,
+                    256 / 8));
+
+                this.IsRegistered = true;
+            }
+            else
             {
-                Console.WriteLine("Podaj hasło (min. 8 znaków, zawierać ma dużą literę, cyfrę i znak specjalny):");
-                password = Console.ReadLine();
-                if (password.Length >= 8 && HasSpecialChars(password) && HasUpperCase(password) && HasNumber(password)) break;
-                Console.WriteLine("Hasło nie spełnia wymagań.");
+                Console.WriteLine("Użytkownik już jest zarejestrowany");
             }
-
-            Salt = new byte[16];
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(Salt);
-            }
-            Password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password,
-                Salt,
-                KeyDerivationPrf.HMACSHA256,
-                10000,
-                256 / 8));
-
-            IsRegistered = true;
         }
 
         private bool IsEmailCorrect(string email)
@@ -671,13 +632,31 @@ namespace PROJEKT
         {
             return password.Any(char.IsDigit);
         }
+        public void Login(string email, string password)
+        {
+            password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password,
+            this.Salt,
+            KeyDerivationPrf.HMACSHA256,
+            10000,
+            256 / 8));
+            if (email == this.Email && password == this.Password && password != null && email != null)
+            {
+                this.isLoggedIn = true;
+                Console.WriteLine("Zalogowano pomyślnie");
+            }
+            else
+            {
+                Console.WriteLine("Błędne dane logowania");
+            }
+        }
     }
 
     public class CarInfo
     {
         public double EngineCapacity { get; set; }
         public string Color { get; set; }
-        public int Year { get; set; }
+        public string Year { get; set; }
         public int HorsePower { get; set; }
         public int MaxSpeed { get; set; }
         public string FuelType { get; set; }
@@ -686,7 +665,7 @@ namespace PROJEKT
         public double HighwayFuelConsumption { get; set; }
         public double Weight { get; set; }
 
-        public CarInfo(double engineCapacity, string color, int horsePower, int maxSpeed, int year, string fuelType, double price, double cityFuelConsumption, double highwayFuelConsumption, double weight)
+        public CarInfo(double engineCapacity, string color, int horsePower, int maxSpeed, string year, string fuelType, double price, double cityFuelConsumption, double highwayFuelConsumption, double weight)
         {
             EngineCapacity = engineCapacity;
             Color = color;
