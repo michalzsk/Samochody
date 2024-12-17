@@ -324,7 +324,7 @@ namespace PROJEKT
     WaitForKeyPress();
 }
 
-        static void KmMileConverter()
+        static void PowerUnitConverter()
         {
             Console.WriteLine("Wybierz opcję:");
             Console.WriteLine("1 - Przelicz km na mile");
