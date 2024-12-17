@@ -25,7 +25,7 @@ namespace PROJEKT
                 Console.WriteLine("8. Kalkulator E30");
                 Console.WriteLine("9.Warsztat");
                 Console.WriteLine("10. Wyjście");
-                Console.Write("Wybierz opcję (1-8): ");
+                Console.Write("Wybierz opcję (1-10): ");
                 int choice = int.Parse(Console.ReadLine());
 
                 switch (choice)
@@ -176,48 +176,100 @@ namespace PROJEKT
         {
             Console.WriteLine("Podaj cenę samochodu oraz okres kredytowania.");
 
-            Console.Write("Podaj cenę samochodu (PLN): ");
-            double carPrice = Convert.ToDouble(Console.ReadLine());
-
-            Console.Write("Podaj okres kredytowania w miesiącach: ");
-            int loanTerm = Convert.ToInt32(Console.ReadLine());
-
-
-            Console.Write("Podaj wysokość wkładu własnego (PLN): ");
-            double downPayment = Convert.ToDouble(Console.ReadLine());
-
-
-            Console.Write("Podaj swoją ocenę kredytową (0-10, gdzie 10 to najwyższa): ");
-            double creditScore = Convert.ToDouble(Console.ReadLine());
-
-
-            Console.Write("Czy chcesz dodać koszt ubezpieczenia do kredytu? (tak/nie): ");
-            string insuranceInput = Console.ReadLine().ToLower();
+            double carPrice = 0;
+            int loanTerm = 0;
+            double downPayment = 0;
+            double creditScore = 0;
             double insuranceCost = 0;
-
-            if (insuranceInput == "tak")
-            {
-                Console.Write("Podaj koszt ubezpieczenia rocznego (PLN): ");
-                insuranceCost = Convert.ToDouble(Console.ReadLine());
-            }
-
-
-            Console.Write("Czy są dodatkowe opłaty za kredyt? (tak/nie): ");
-            string additionalFeesInput = Console.ReadLine().ToLower();
             double additionalFees = 0;
 
-            if (additionalFeesInput == "tak")
+            while (true)
             {
-                Console.Write("Podaj kwotę dodatkowych opłat (PLN): ");
-                additionalFees = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Podaj cenę samochodu (PLN): ");
+                if (double.TryParse(Console.ReadLine(), out carPrice) && carPrice >= 0)
+                    break;
+                Console.WriteLine("Nieprawidłowa wartość. Podaj poprawną cenę samochodu (PLN).");
             }
 
+            while (true)
+            {
+                Console.Write("Podaj okres kredytowania w miesiącach: ");
+                if (int.TryParse(Console.ReadLine(), out loanTerm) && loanTerm > 0)
+                    break;
+                Console.WriteLine("Nieprawidłowa wartość. Podaj poprawną liczbę miesięcy.");
+            }
+
+   
+            while (true)
+            {
+                Console.Write("Podaj wysokość wkładu własnego (PLN): ");
+                if (double.TryParse(Console.ReadLine(), out downPayment) && downPayment >= 0)
+                    break;
+                Console.WriteLine("Nieprawidłowa wartość. Podaj poprawną kwotę wkładu własnego (PLN).");
+            }
+
+      
+            while (true)
+            {
+                Console.Write("Podaj swoją ocenę kredytową (0-10, gdzie 10 to najwyższa): ");
+                if (double.TryParse(Console.ReadLine(), out creditScore) && creditScore >= 0 && creditScore <= 10)
+                    break;
+                Console.WriteLine("Nieprawidłowa wartość. Podaj ocenę kredytową od 0 do 10.");
+            }
+
+         
+            while (true)
+            {
+                Console.Write("Czy chcesz dodać koszt ubezpieczenia do kredytu? (tak/nie): ");
+                string insuranceInput = Console.ReadLine().ToLower();
+                if (insuranceInput == "tak")
+                {
+                    while (true)
+                    {
+                        Console.Write("Podaj koszt ubezpieczenia rocznego (PLN): ");
+                        if (double.TryParse(Console.ReadLine(), out insuranceCost) && insuranceCost >= 0)
+                            break;
+                        Console.WriteLine("Nieprawidłowa wartość. Podaj poprawną kwotę ubezpieczenia (PLN).");
+                    }
+                    break;
+                }
+                else if (insuranceInput == "nie")
+                {
+                    insuranceCost = 0;
+                    break;
+                }
+                Console.WriteLine("Nieprawidłowa odpowiedź. Odpowiedz 'tak' lub 'nie'.");
+            }
+
+         
+            while (true)
+            {
+                Console.Write("Czy są dodatkowe opłaty za kredyt? (tak/nie): ");
+                string additionalFeesInput = Console.ReadLine().ToLower();
+                if (additionalFeesInput == "tak")
+                {
+                    while (true)
+                    {
+                        Console.Write("Podaj kwotę dodatkowych opłat (PLN): ");
+                        if (double.TryParse(Console.ReadLine(), out additionalFees) && additionalFees >= 0)
+                            break;
+                        Console.WriteLine("Nieprawidłowa wartość. Podaj poprawną kwotę opłat (PLN).");
+                    }
+                    break;
+                }
+                else if (additionalFeesInput == "nie")
+                {
+                    additionalFees = 0;
+                    break;
+                }
+                Console.WriteLine("Nieprawidłowa odpowiedź. Odpowiedz 'tak' lub 'nie'.");
+            }
 
             double totalLoanAmount = carPrice - downPayment + insuranceCost + additionalFees;
 
-
             double interestRate = 0;
 
+        
             if (loanTerm <= 6)
             {
                 interestRate = 0.02;
@@ -235,7 +287,6 @@ namespace PROJEKT
                 interestRate = 0.10;
             }
 
-
             if (creditScore < 5)
             {
                 interestRate += 0.02;
@@ -244,8 +295,6 @@ namespace PROJEKT
             {
                 interestRate -= 0.01;
             }
-
-
 
             double monthlyInterestRate = interestRate / 12;
             double monthlyPayment = (totalLoanAmount * monthlyInterestRate) / (1 - Math.Pow(1 + monthlyInterestRate, -loanTerm));
@@ -260,6 +309,7 @@ namespace PROJEKT
             Console.WriteLine($"Miesięczna rata kredytu wynosi: {Math.Round(monthlyPayment, 2)} PLN");
             Console.ReadKey();
         }
+
 
         static void PowerUnitConverter()
         {
