@@ -23,15 +23,31 @@ namespace PROJEKT
                 Console.WriteLine("3. Przelicznik jednostek (kW <-> KM)");
                 Console.WriteLine("4. Przelicznik km <-> mil");
                 Console.WriteLine("5. Obliczenia związane z paliwem");
-                Console.WriteLine("6. Wyświetlenie aut.");
+                Console.WriteLine("6. Szukanie aut.");
                 Console.WriteLine("7. Wyścig aut.");
                 Console.WriteLine("8. Kalkulator E30");
                 Console.WriteLine("9.Warsztat");
+                Console.WriteLine("10. Wyjście");
                 Console.WriteLine("10. Przegląd");
-                Console.WriteLine("11. Wyjście");
-                Console.WriteLine("12. Logowanie");
-                Console.Write("Wybierz opcję (1-12): ");
-                int choice = int.Parse(Console.ReadLine());
+                Console.WriteLine("11. Filtruj samochody");
+                Console.WriteLine("12. Wyjście");
+                Console.WriteLine("13. Logowanie");
+                int choice = 0;
+
+                while (true)
+                {
+                    Console.Write("Wybierz opcję (1-13): ");
+                    string input = Console.ReadLine();
+
+                    if (int.TryParse(input, out choice) && choice >= 1 && choice <= 13)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Błąd: Wprowadź liczbę od 1 do 13.");
+                    }
+                }
 
                 switch (choice)
                 {
@@ -50,7 +66,7 @@ namespace PROJEKT
                     case 5:
                         FuelCalculations();
                         break;
-                    case 12:
+                    case 13:
                         LoginUser();
                         break;
                     case 6:
@@ -66,9 +82,6 @@ namespace PROJEKT
                         WorkshopMenu();
                         break;
                     case 10:
-                        CalculateInspection();
-                        break;
-                    case 11:
                         return;
                     default:
                         Console.WriteLine("Niepoprawny wybór!");
@@ -196,99 +209,47 @@ namespace PROJEKT
         {
             Console.WriteLine("Podaj cenę samochodu oraz okres kredytowania.");
 
-            double carPrice = 0;
-            int loanTerm = 0;
-            double downPayment = 0;
-            double creditScore = 0;
+            Console.Write("Podaj cenę samochodu (PLN): ");
+            double carPrice = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Podaj okres kredytowania w miesiącach: ");
+            int loanTerm = Convert.ToInt32(Console.ReadLine());
+
+
+            Console.Write("Podaj wysokość wkładu własnego (PLN): ");
+            double downPayment = Convert.ToDouble(Console.ReadLine());
+
+
+            Console.Write("Podaj swoją ocenę kredytową (0-10, gdzie 10 to najwyższa): ");
+            double creditScore = Convert.ToDouble(Console.ReadLine());
+
+
+            Console.Write("Czy chcesz dodać koszt ubezpieczenia do kredytu? (tak/nie): ");
+            string insuranceInput = Console.ReadLine().ToLower();
             double insuranceCost = 0;
+
+            if (insuranceInput == "tak")
+            {
+                Console.Write("Podaj koszt ubezpieczenia rocznego (PLN): ");
+                insuranceCost = Convert.ToDouble(Console.ReadLine());
+            }
+
+
+            Console.Write("Czy są dodatkowe opłaty za kredyt? (tak/nie): ");
+            string additionalFeesInput = Console.ReadLine().ToLower();
             double additionalFees = 0;
 
-            while (true)
+            if (additionalFeesInput == "tak")
             {
-                Console.Write("Podaj cenę samochodu (PLN): ");
-                if (double.TryParse(Console.ReadLine(), out carPrice) && carPrice >= 0)
-                    break;
-                Console.WriteLine("Nieprawidłowa wartość. Podaj poprawną cenę samochodu (PLN).");
+                Console.Write("Podaj kwotę dodatkowych opłat (PLN): ");
+                additionalFees = Convert.ToDouble(Console.ReadLine());
             }
 
-            while (true)
-            {
-                Console.Write("Podaj okres kredytowania w miesiącach: ");
-                if (int.TryParse(Console.ReadLine(), out loanTerm) && loanTerm > 0)
-                    break;
-                Console.WriteLine("Nieprawidłowa wartość. Podaj poprawną liczbę miesięcy.");
-            }
-
-
-            while (true)
-            {
-                Console.Write("Podaj wysokość wkładu własnego (PLN): ");
-                if (double.TryParse(Console.ReadLine(), out downPayment) && downPayment >= 0)
-                    break;
-                Console.WriteLine("Nieprawidłowa wartość. Podaj poprawną kwotę wkładu własnego (PLN).");
-            }
-
-
-            while (true)
-            {
-                Console.Write("Podaj swoją ocenę kredytową (0-10, gdzie 10 to najwyższa): ");
-                if (double.TryParse(Console.ReadLine(), out creditScore) && creditScore >= 0 && creditScore <= 10)
-                    break;
-                Console.WriteLine("Nieprawidłowa wartość. Podaj ocenę kredytową od 0 do 10.");
-            }
-
-
-            while (true)
-            {
-                Console.Write("Czy chcesz dodać koszt ubezpieczenia do kredytu? (tak/nie): ");
-                string insuranceInput = Console.ReadLine().ToLower();
-                if (insuranceInput == "tak")
-                {
-                    while (true)
-                    {
-                        Console.Write("Podaj koszt ubezpieczenia rocznego (PLN): ");
-                        if (double.TryParse(Console.ReadLine(), out insuranceCost) && insuranceCost >= 0)
-                            break;
-                        Console.WriteLine("Nieprawidłowa wartość. Podaj poprawną kwotę ubezpieczenia (PLN).");
-                    }
-                    break;
-                }
-                else if (insuranceInput == "nie")
-                {
-                    insuranceCost = 0;
-                    break;
-                }
-                Console.WriteLine("Nieprawidłowa odpowiedź. Odpowiedz 'tak' lub 'nie'.");
-            }
-
-
-            while (true)
-            {
-                Console.Write("Czy są dodatkowe opłaty za kredyt? (tak/nie): ");
-                string additionalFeesInput = Console.ReadLine().ToLower();
-                if (additionalFeesInput == "tak")
-                {
-                    while (true)
-                    {
-                        Console.Write("Podaj kwotę dodatkowych opłat (PLN): ");
-                        if (double.TryParse(Console.ReadLine(), out additionalFees) && additionalFees >= 0)
-                            break;
-                        Console.WriteLine("Nieprawidłowa wartość. Podaj poprawną kwotę opłat (PLN).");
-                    }
-                    break;
-                }
-                else if (additionalFeesInput == "nie")
-                {
-                    additionalFees = 0;
-                    break;
-                }
-                Console.WriteLine("Nieprawidłowa odpowiedź. Odpowiedz 'tak' lub 'nie'.");
-            }
 
             double totalLoanAmount = carPrice - downPayment + insuranceCost + additionalFees;
 
-            double interestRate = 0;
 
+            double interestRate = 0;
 
             if (loanTerm <= 6)
             {
@@ -307,6 +268,7 @@ namespace PROJEKT
                 interestRate = 0.10;
             }
 
+
             if (creditScore < 5)
             {
                 interestRate += 0.02;
@@ -315,6 +277,8 @@ namespace PROJEKT
             {
                 interestRate -= 0.01;
             }
+
+
 
             double monthlyInterestRate = interestRate / 12;
             double monthlyPayment = (totalLoanAmount * monthlyInterestRate) / (1 - Math.Pow(1 + monthlyInterestRate, -loanTerm));
@@ -329,7 +293,6 @@ namespace PROJEKT
             Console.WriteLine($"Miesięczna rata kredytu wynosi: {Math.Round(monthlyPayment, 2)} PLN");
             Console.ReadKey();
         }
-
 
         static void PowerUnitConverter()
         {
@@ -509,28 +472,50 @@ namespace PROJEKT
         static List<Car> CarList = new();
         static public void initalizeCars()
         {
-            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, 2020, "diesel", 139900, 9.0, 6.3, 1071), "Exeo"));
-            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, 2020, "diesel", 139900, 9.0, 6.3, 1071), "Tarraco"));
-            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 204, 253, 2018, "benzyna", 239900, 12.0, 8.1, 1200), "A5"));
-            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 245, 265, 2021, "benzyna", 269900, 11.5, 7.2, 1350), "A4"));
-            CarList.Add(new Audi(new CarInfo(2.5, "srebrny", 185, 245, 2020, "diesel", 249900, 7.0, 5.9, 1250), "Q5"));
-            CarList.Add(new Audi(new CarInfo(2.0, "biały", 190, 230, 2022, "benzyna", 279900, 9.0, 7.5, 1300), "Q7"));
-            CarList.Add(new BMW(new CarInfo(2.0, "niebieski", 192, 250, 2019, "diesel", 219900, 8.5, 6.5, 1350), "X3"));
-            CarList.Add(new BMW(new CarInfo(3.0, "czerwony", 300, 280, 2022, "benzyna", 399900, 12.5, 9.3, 1500), "M4"));
-            CarList.Add(new BMW(new CarInfo(3.0, "czarny", 250, 260, 2021, "diesel", 269900, 9.5, 7.8, 1400), "X5"));
-            CarList.Add(new Mercedes(new CarInfo(2.0, "złoty", 210, 250, 2020, "benzyna", 239900, 8.5, 6.2, 1320), "C-Class"));
-            CarList.Add(new Mercedes(new CarInfo(3.0, "biały", 300, 270, 2022, "diesel", 359900, 10.0, 8.5, 1450), "E-Class"));
-            CarList.Add(new Mercedes(new CarInfo(2.5, "czarny", 260, 260, 2021, "benzyna", 299900, 9.0, 7.0, 1400), "S-Class"));
-            CarList.Add(new Volkswagen(new CarInfo(1.5, "zielony", 150, 200, 2020, "benzyna", 109900, 6.5, 5.8, 1150), "Golf"));
-            CarList.Add(new Volkswagen(new CarInfo(2.0, "niebieski", 180, 220, 2022, "diesel", 139900, 7.5, 6.2, 1250), "Passat"));
-            CarList.Add(new Volkswagen(new CarInfo(2.0, "srebrny", 150, 210, 2020, "diesel", 129900, 6.0, 5.5, 1200), "Tiguan"));
-            CarList.Add(new Opel(new CarInfo(1.6, "czerwony", 120, 190, 2019, "benzyna", 87900, 6.5, 5.5, 1100), "Astra"));
-            CarList.Add(new Opel(new CarInfo(2.0, "żółty", 170, 210, 2021, "diesel", 139900, 7.0, 6.0, 1200), "Insignia"));
-            CarList.Add(new Fiat(new CarInfo(1.4, "błękitny", 100, 180, 2018, "benzyna", 67900, 7.0, 6.5, 1000), "Tipo"));
-            CarList.Add(new Fiat(new CarInfo(1.6, "czarny", 130, 200, 2020, "diesel", 89900, 6.0, 5.3, 1100), "500X"));
+            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, 2009, "diesel", 139900, 9.0, 6.3, 1071), "Exeo"));
+            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, 2018, "diesel", 139900, 9.0, 6.3, 1071), "Tarraco"));
+            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 204, 253, 2007, "benzyna", 239900, 12.0, 8.1, 1200), "A5"));
+            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 245, 265, 1995, "benzyna", 269900, 11.5, 7.2, 1350), "A4"));
+            CarList.Add(new Audi(new CarInfo(2.5, "srebrny", 185, 245, 2008, "diesel", 249900, 7.0, 5.9, 1250), "Q5"));
+            CarList.Add(new Audi(new CarInfo(2.0, "biały", 190, 230, 2005, "benzyna", 279900, 9.0, 7.5, 1300), "Q7"));
+            CarList.Add(new BMW(new CarInfo(2.0, "niebieski", 192, 250, 2003,"diesel", 219900, 8.5, 6.5, 1350), "X3"));
+            CarList.Add(new BMW(new CarInfo(3.0, "czerwony", 300, 280, 2014, "benzyna", 399900, 12.5, 9.3, 1500), "M4"));
+            CarList.Add(new BMW(new CarInfo(3.0, "czarny", 250, 260, 2000, "diesel", 269900, 9.5, 7.8, 1400), "X5"));
+            CarList.Add(new Mercedes(new CarInfo(2.0, "złoty", 210, 250, 1993, "benzyna", 239900, 8.5, 6.2, 1320), "C-Class"));
+            CarList.Add(new Mercedes(new CarInfo(3.0, "biały", 300, 270, 1993, "diesel", 359900, 10.0, 8.5, 1450), "E-Class"));
+            CarList.Add(new Mercedes(new CarInfo(2.5, "czarny", 260, 260, 1972, "benzyna", 299900, 9.0, 7.0, 1400), "S-Class"));
+            CarList.Add(new Volkswagen(new CarInfo(1.5, "zielony", 150, 200, 1974, "benzyna", 109900, 6.5, 5.8, 1150), "Golf"));
+            CarList.Add(new Volkswagen(new CarInfo(2.0, "niebieski", 180, 220, 1973, "diesel", 139900, 7.5, 6.2, 1250), "Passat"));
+            CarList.Add(new Volkswagen(new CarInfo(2.0, "srebrny", 150, 210, 2007, "diesel", 129900, 6.0, 5.5, 1200), "Tiguan"));
+            CarList.Add(new Opel(new CarInfo(1.6, "czerwony", 120, 190, 1991, "benzyna", 87900, 6.5, 5.5, 1100), "Astra"));
+            CarList.Add(new Opel(new CarInfo(2.0, "żółty", 170, 210, 2008, "diesel", 139900, 7.0, 6.0, 1200), "Insignia"));
+            CarList.Add(new Fiat(new CarInfo(1.4, "błękitny", 95, 180, 1987, "benzyna", 67900, 7.0, 6.5, 1000), "Tipo"));
+            CarList.Add(new Fiat(new CarInfo(1.6, "czarny", 130, 200, 2014, "diesel", 89900, 6.0, 5.3, 1100), "500X"));
 
         }
-
+        static void SearchCars()
+        {
+            Console.WriteLine("Czy chcesz przefiltrować swoją listę?");
+            Console.WriteLine("1. Wyświetl bez filtrowania");
+            Console.WriteLine("2. Filtruj");
+            Console.WriteLine("3. Wyjście");
+            int searchchoice = int.Parse(Console.ReadLine());
+            switch (searchchoice)
+            {
+                case 1:
+                    ViewCars();
+                    break;
+                case 2:
+                    FilterCars();
+                    break;
+                case 3:
+                    WaitForKeyPress();
+                    break;
+                default:
+                    Console.WriteLine("Niepoprawna opcja");
+                    break;
+            }
+        }
         static void FilterCars()
         {
             Console.WriteLine("Filtruj samochody po:");
@@ -556,7 +541,7 @@ namespace PROJEKT
                         Console.WriteLine("Podaj typ paliwa (benzyna/diesel/elektryczne): ");
                         fuelType = Console.ReadLine().ToLower();
                     }
-                        filteredCars = CarList.Where(car => car.CarInfo.FuelType.ToLower() == fuelType).ToList();
+                    filteredCars = CarList.Where(car => car.CarInfo.FuelType.ToLower() == fuelType).ToList();
 
                     break;
                 case 2:
@@ -570,7 +555,7 @@ namespace PROJEKT
                     double minPrice = double.Parse(Console.ReadLine());
                     Console.Write("Podaj maksymalną cenę (PLN): ");
                     double maxPrice = double.Parse(Console.ReadLine());
-                    while(minPrice >= maxPrice)
+                    while (minPrice >= maxPrice)
                     {
                         Console.WriteLine($"Wprowadzono błędny przedział cenowy. Twoja cena minimalna wynosi {minPrice}");
                         Console.WriteLine("Podaj maksymalną cenę (PLN): ");
@@ -625,41 +610,6 @@ namespace PROJEKT
 
             WaitForKeyPress();
         }
-
-        static void CalculateInspection()
-        {
-            Console.WriteLine("Podaj przebieg samochodu (w km): ");
-            int currentMileage = int.Parse(Console.ReadLine());
-            const int inspectionInterval = 15000;
-
-            int remainingMileage = inspectionInterval - (currentMileage % inspectionInterval);
-
-            Console.WriteLine($"Pozostało {remainingMileage} km do kolejnego przeglądu technicznego.");
-            WaitForKeyPress();
-        }
-        static void SearchCars()
-        {
-            Console.WriteLine("Czy chcesz przefiltrować swoją listę?");
-            Console.WriteLine("1. Wyświetl bez filtrowania");
-            Console.WriteLine("2. Filtruj");
-            Console.WriteLine("3. Wyjście");
-            int searchchoice = int.Parse(Console.ReadLine());
-            switch (searchchoice)
-            {
-                case 1:
-                    ViewCars();
-                    break;
-                case 2:
-                    FilterCars();
-                    break;
-                case 3:
-                    WaitForKeyPress();
-                    break;
-                default:
-                    Console.WriteLine("Niepoprawna opcja");
-                    break;
-            }
-        }
         static void ViewCars()
         {
             foreach (var car in CarList)
@@ -694,28 +644,147 @@ namespace PROJEKT
 
             var car1 = CarList[carIndex1];
             var car2 = CarList[carIndex2];
+            int stability1 = car1.CarInfo.Year;
+            int stability2 = car2.CarInfo.Year;
+            int KM1 = car1.CarInfo.HorsePower;
+            int KM2 = car2.CarInfo.HorsePower;
+            int skibidivar2;
+            int carexplosionchance1 = 0;
+            int carexplosionchance2 = 0;
+            if (stability1 >= 2000)
+            {
+                stability1 = stability1 - 2000;
+            }
+            else
+            {
+                stability1 = 0;
+            }
+            if (stability2 >= 2000)
+            {
+                stability2 = stability2 - 2000;
+            }
+            else
+            {
+                stability2 = 0;
+            }
+            Console.WriteLine("Czy pierwsze auto ma etanol?\n 1-TAK\n2-NIE");
+            int skibidivar = Int32.Parse(Console.ReadLine());
+            if (skibidivar == 1)
+            {
+                Console.WriteLine("Ile procent całościowo to etanol?");
+                skibidivar2 = Int32.Parse(Console.ReadLine());
+                if (skibidivar2 >= 50)
+                {
+                    Console.WriteLine("Toś poleciał");
+                    carexplosionchance1 = 100 - stability1;
+                }
+                else
+                {
+                    Console.WriteLine("Powodzenia w wyścigu");
+                    carexplosionchance1 = (skibidivar2 * 2) - stability1;
+                    if (skibidivar2 < 10)
+                    {
+                        KM1 = KM1 * ((skibidivar2 / 10) + 1);
+                    }
+                    else
+                    {
+                        KM1 = KM1 * (skibidivar2 / 10);
+                    }
+                }
+            }
+            Console.WriteLine("Czy drugie auto ma etanol?\n 1-TAK\n2-NIE");
+            skibidivar = Int32.Parse(Console.ReadLine());
+            if (skibidivar == 1)
+            {
+                Console.WriteLine("Ile procent całościowo to etanol?");
+                skibidivar2 = Int32.Parse(Console.ReadLine());
+                if (skibidivar2 >= 50)
+                {
+                    Console.WriteLine("Toś poleciał");
+                    carexplosionchance2 = 100 - stability2;
+                }
+                else
+                {
+                    Console.WriteLine("Powodzenia w wyścigu");
+                    carexplosionchance2 = (skibidivar2 * 2) - stability2;
+                    if (skibidivar2 < 10)
+                    {
+                        KM2 = KM2 * ((skibidivar2 / 10) + 1);
+                    }
+                    else
+                    {
+                        KM2 = KM2 * (skibidivar2 / 10);
+                    }
+                }
+            }
 
 
             Console.WriteLine("Rozpoczynamy wyścig!");
             Console.WriteLine($"Samochód 1: {car1.Model} z {car1.CarInfo.HorsePower} KM");
             Console.WriteLine($"Samochód 2: {car2.Model} z {car2.CarInfo.HorsePower} KM");
 
+            bool explode1 = false;
+            bool explode2 = false;
+            if (explosionCarCheck(carexplosionchance1))
+            {
+                Console.WriteLine($"{car1.Model} eksplodował :3");
+                explode1 = true;
+            }
+            if (explosionCarCheck(carexplosionchance2))
+            {
+                Console.WriteLine($"{car2.Model} eksplodował :3");
+                explode2 = true;
+            }
 
-            if (car1.CarInfo.HorsePower > car2.CarInfo.HorsePower)
+            if (KM1 > KM2 && !explode1)
             {
                 Console.WriteLine($"{car1.Model} wygrał wyścig!");
             }
-            else if (car1.CarInfo.HorsePower < car2.CarInfo.HorsePower)
+            else if (KM1 < KM2 && !explode2)
             {
                 Console.WriteLine($"{car2.Model} wygrał wyścig!");
             }
+            else if (explode1 && !explode2)
+            {
+                Console.WriteLine($"{car2.Model} wygrał wyścig!");
+            }
+            else if (!explode1 && explode2)
+            {
+                Console.WriteLine($"{car1.Model} wygrał wyścig!");
+            }
             else
             {
-                Console.WriteLine("Wyścig zakończył się remisem!");
+                Console.WriteLine("Wyścig zakończył się remisem");
             }
 
 
             WaitForKeyPress();
+        }
+        static bool explosionCarCheck(int chance)
+        {
+            Random rng = new Random();
+            int nasienie = rng.Next(1, 101);
+            int i = 1;
+            int bomba;
+            bool wybuch = false;
+            while (i <= chance)
+            {
+                bomba = rng.Next(1, 101);
+                if (bomba == nasienie)
+                {
+                    wybuch = true;
+                    break;
+                }
+                i++;
+            }
+            if (wybuch)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }
