@@ -22,7 +22,9 @@ namespace PROJEKT
                 Console.WriteLine("5. Obliczenia związane z paliwem");
                 Console.WriteLine("6. Wyświetlenie aut.");
                 Console.WriteLine("7. Wyścig aut.");
-                Console.WriteLine("8. Wyjście");
+                Console.WriteLine("8. Kalkulator E30");
+                Console.WriteLine("9.Warsztat");
+                Console.WriteLine("10. Wyjście");
                 Console.Write("Wybierz opcję (1-8): ");
                 int choice = int.Parse(Console.ReadLine());
 
@@ -50,12 +52,77 @@ namespace PROJEKT
                         Race();
                         break;
                     case 8:
+                        CalculateEthanolPercentage();
+                        break;
+                    case 9:
+                        WorkshopMenu();
+                        break;
+                    case 10:
                         return;
                     default:
                         Console.WriteLine("Niepoprawny wybór!");
                         break;
                 }
             }
+        }
+        static void WorkshopMenu()
+        {
+            Console.WriteLine("Wybierz samochód do modyfikacji:");
+            for (int i = 0; i < CarList.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {CarList[i].GetType().Name} {CarList[i].Model}, Cena: {CarList[i].CarInfo.Price} PLN");
+            }
+
+            Console.Write("Podaj numer samochodu: ");
+            int carIndex = int.Parse(Console.ReadLine()) - 1;
+
+            if (carIndex < 0 || carIndex >= CarList.Count)
+            {
+                Console.WriteLine("Nieprawidłowy wybór samochodu.");
+                WaitForKeyPress();
+                return;
+            }
+
+            Car selectedCar = CarList[carIndex];
+            Console.WriteLine($"Wybrałeś: {selectedCar.GetType().Name} {selectedCar.Model}");
+
+            Console.WriteLine("Wybierz modyfikację:");
+            Console.WriteLine("1. Spoiler (Cena: 2000 PLN)");
+            Console.WriteLine("2. Wydech sportowy (Cena: 3000 PLN)");
+            Console.WriteLine("3. Folia ochronna (Cena: 1500 PLN)");
+            Console.WriteLine("4. Powrót do menu");
+
+            Console.Write("Twój wybór: ");
+            int modChoice = int.Parse(Console.ReadLine());
+
+            double modPrice = 0;
+            string modName = "";
+
+            switch (modChoice)
+            {
+                case 1:
+                    modPrice = 2000;
+                    modName = "Spoiler";
+                    break;
+                case 2:
+                    modPrice = 3000;
+                    modName = "Wydech sportowy";
+                    break;
+                case 3:
+                    modPrice = 1500;
+                    modName = "Folia ochronna";
+                    break;
+                case 4:
+                    return;
+                default:
+                    Console.WriteLine("Nieprawidłowy wybór modyfikacji.");
+                    WaitForKeyPress();
+                    return;
+            }
+
+            selectedCar.CarInfo.Price += modPrice;
+            Console.WriteLine($"Dodano modyfikację: {modName}. Nowa cena samochodu: {selectedCar.CarInfo.Price} PLN");
+            WaitForKeyPress();
         }
         static void RegisterUser()
         {
@@ -73,6 +140,38 @@ namespace PROJEKT
             WaitForKeyPress();
         }
 
+        static void CalculateEthanolPercentage()
+        {
+
+
+            Console.Write("Podaj wielkość baku (w litrach): ");
+            double bakSize = double.Parse(Console.ReadLine());
+
+            Console.Write("Podaj ilość paliwa w baku (w litrach): ");
+            double fuelInTank = double.Parse(Console.ReadLine());
+
+            Console.Write("Podaj procentową ilość etanolu w paliwie (np. 10 dla 10%): ");
+            double desiredEthanolPercentage = double.Parse(Console.ReadLine());
+
+
+            double availableSpace = bakSize - fuelInTank;
+
+            if (availableSpace <= 0)
+            {
+                Console.WriteLine("Bak jest już pełny lub podano niepoprawne dane.");
+                return;
+            }
+
+
+            double ethanolToAdd = (desiredEthanolPercentage / 100) * availableSpace;
+            double fuelToAdd = availableSpace - ethanolToAdd;
+
+
+            Console.WriteLine($"Aby uzyskać {desiredEthanolPercentage}% etanolu w paliwie:");
+            Console.WriteLine($"Dodaj {ethanolToAdd:F2} litrów etanolu.");
+            Console.WriteLine($"Dodaj {fuelToAdd:F2} litrów paliwa.");
+
+        }
         static void CalculateLoan()
         {
             Console.WriteLine("Podaj cenę samochodu oraz okres kredytowania.");
@@ -377,17 +476,17 @@ namespace PROJEKT
                 Console.WriteLine();
             }
             WaitForKeyPress();
-            
+
         }
         static void Race()
         {
             Random random = new Random();
 
-            
+
             int carIndex1 = random.Next(CarList.Count);
             int carIndex2 = random.Next(CarList.Count);
 
-            
+
             while (carIndex1 == carIndex2)
             {
                 carIndex2 = random.Next(CarList.Count);
@@ -396,12 +495,12 @@ namespace PROJEKT
             var car1 = CarList[carIndex1];
             var car2 = CarList[carIndex2];
 
-            
+
             Console.WriteLine("Rozpoczynamy wyścig!");
             Console.WriteLine($"Samochód 1: {car1.Model} z {car1.CarInfo.HorsePower} KM");
             Console.WriteLine($"Samochód 2: {car2.Model} z {car2.CarInfo.HorsePower} KM");
 
-            
+
             if (car1.CarInfo.HorsePower > car2.CarInfo.HorsePower)
             {
                 Console.WriteLine($"{car1.Model} wygrał wyścig!");
@@ -415,7 +514,7 @@ namespace PROJEKT
                 Console.WriteLine("Wyścig zakończył się remisem!");
             }
 
-            
+
             WaitForKeyPress();
         }
 
