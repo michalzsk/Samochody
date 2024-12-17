@@ -32,7 +32,6 @@ namespace PROJEKT
                 Console.WriteLine("11. Filtruj samochody");
                 Console.WriteLine("12. Wyjście");
                 Console.WriteLine("13. Logowanie");
-                Console.Write("Wybierz opcję (1-8): ");
                 int choice = 0;
 
                 while (true)
