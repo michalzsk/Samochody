@@ -140,36 +140,38 @@ namespace PROJEKT
             WaitForKeyPress();
         }
 
-        static void CalculateEthanolPercentage(){
-            
-                
-                Console.Write("Podaj wielkość baku (w litrach): ");
-                double bakSize = double.Parse(Console.ReadLine());
+        static void CalculateEthanolPercentage()
+        {
 
-                Console.Write("Podaj ilość paliwa w baku (w litrach): ");
-                double fuelInTank = double.Parse(Console.ReadLine());
 
-                Console.Write("Podaj procentową ilość etanolu w paliwie (np. 10 dla 10%): ");
-                double desiredEthanolPercentage = double.Parse(Console.ReadLine());
+            Console.Write("Podaj wielkość baku (w litrach): ");
+            double bakSize = double.Parse(Console.ReadLine());
 
-                
-                double availableSpace = bakSize - fuelInTank;
+            Console.Write("Podaj ilość paliwa w baku (w litrach): ");
+            double fuelInTank = double.Parse(Console.ReadLine());
 
-                if (availableSpace <= 0)
-                {
-                    Console.WriteLine("Bak jest już pełny lub podano niepoprawne dane.");
-                    return;
-                }
+            Console.Write("Podaj procentową ilość etanolu w paliwie (np. 10 dla 10%): ");
+            double desiredEthanolPercentage = double.Parse(Console.ReadLine());
 
-                
-                double ethanolToAdd = (desiredEthanolPercentage / 100) * availableSpace;
-                double fuelToAdd = availableSpace - ethanolToAdd;
 
-                
-                Console.WriteLine($"Aby uzyskać {desiredEthanolPercentage}% etanolu w paliwie:");
-                Console.WriteLine($"Dodaj {ethanolToAdd:F2} litrów etanolu.");
-                Console.WriteLine($"Dodaj {fuelToAdd:F2} litrów paliwa.");
-            
+            double availableSpace = bakSize - fuelInTank;
+
+            if (availableSpace <= 0)
+            {
+                Console.WriteLine("Bak jest już pełny lub podano niepoprawne dane.");
+                return;
+            }
+
+
+            double ethanolToAdd = (desiredEthanolPercentage / 100) * availableSpace;
+            double fuelToAdd = availableSpace - ethanolToAdd;
+
+
+            Console.WriteLine($"Aby uzyskać {desiredEthanolPercentage}% etanolu w paliwie:");
+            Console.WriteLine($"Dodaj {ethanolToAdd:F2} litrów etanolu.");
+            Console.WriteLine($"Dodaj {fuelToAdd:F2} litrów paliwa.");
+            WaitForKeyPress();
+
         }
         static void CalculateLoan()
         {
