@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Metrics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,6 +9,8 @@ namespace PROJEKT
 {
     internal class Program
     {
+        static User user;
+
         static void Main(string[] args)
         {
             initalizeCars();
@@ -25,6 +28,12 @@ namespace PROJEKT
                 Console.WriteLine("8. Kalkulator E30");
                 Console.WriteLine("9.Warsztat");
                 Console.WriteLine("10. Wyjście");
+
+                Console.WriteLine("10. Przegląd");
+                Console.WriteLine("11. Filtruj samochody");
+                Console.WriteLine("12. Wyjście");
+                Console.WriteLine("13. Logowanie");
+
                 Console.Write("Wybierz opcję (1-8): ");
                 int choice = int.Parse(Console.ReadLine());
 
@@ -44,6 +53,9 @@ namespace PROJEKT
                         break;
                     case 5:
                         FuelCalculations();
+                        break;
+                    case 13:
+                        LoginUser();
                         break;
                     case 6:
                         ViewCars();
@@ -126,7 +138,7 @@ namespace PROJEKT
         }
         static void RegisterUser()
         {
-            User user = new User();
+            user = new User();
             user.Register();
             if (user.IsRegistered)
             {
@@ -137,6 +149,15 @@ namespace PROJEKT
                 Console.WriteLine("Nie udało się zarejestrować użytkownika. Spróbuj ponownie.");
             }
 
+            WaitForKeyPress();
+        }
+        static void LoginUser()
+        {
+            Console.WriteLine("Podaj adres email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Podaj hasło");
+            string password = Console.ReadLine();
+            user.Login(email, password);
             WaitForKeyPress();
         }
 
@@ -527,7 +548,11 @@ namespace PROJEKT
         private string Email;
         private string Password;
         private byte[] Salt;
-
+        private bool isLoggedIn = false;
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Email: {Email}\n Password: {Password} \n Salt: {Salt}");
+        }
         public void Print()
         {
             Console.WriteLine("Rejestracja zakończona pomyślnie.");
@@ -537,35 +562,42 @@ namespace PROJEKT
         public void Register()
         {
             string password;
-            while (true)
+            if (IsRegistered == false)
             {
-                Console.WriteLine("Podaj email:");
-                Email = Console.ReadLine();
-                if (IsEmailCorrect(Email)) break;
-                Console.WriteLine("Niepoprawny email.");
-            }
+                while (true)
+                {
+                    Console.WriteLine("Podaj email:");
+                    Email = Console.ReadLine();
+                    if (IsEmailCorrect(Email)) break;
+                    Console.WriteLine("Niepoprawny email.");
+                }
 
-            while (true)
+                while (true)
+                {
+                    Console.WriteLine("Podaj hasło (min. 8 znaków, zawierać ma dużą literę, cyfrę i znak specjalny):");
+                    password = Console.ReadLine();
+                    if (password.Length >= 8 && HasSpecialChars(password) && HasUpperCase(password) && HasNumber(password) && password.Length < 40) break;
+                    Console.WriteLine("Hasło nie spełnia wymagań.");
+                }
+
+                Salt = new byte[16];
+                using (var rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(Salt);
+                }
+                Password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                    password,
+                    Salt,
+                    KeyDerivationPrf.HMACSHA256,
+                    10000,
+                    256 / 8));
+
+                this.IsRegistered = true;
+            }
+            else
             {
-                Console.WriteLine("Podaj hasło (min. 8 znaków, zawierać ma dużą literę, cyfrę i znak specjalny):");
-                password = Console.ReadLine();
-                if (password.Length >= 8 && HasSpecialChars(password) && HasUpperCase(password) && HasNumber(password)) break;
-                Console.WriteLine("Hasło nie spełnia wymagań.");
+                Console.WriteLine("Użytkownik już jest zarejestrowany");
             }
-
-            Salt = new byte[16];
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(Salt);
-            }
-            Password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password,
-                Salt,
-                KeyDerivationPrf.HMACSHA256,
-                10000,
-                256 / 8));
-
-            IsRegistered = true;
         }
 
         private bool IsEmailCorrect(string email)
@@ -587,6 +619,24 @@ namespace PROJEKT
         private bool HasNumber(string password)
         {
             return password.Any(char.IsDigit);
+        }
+        public void Login(string email, string password)
+        {
+            password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password,
+            this.Salt,
+            KeyDerivationPrf.HMACSHA256,
+            10000,
+            256 / 8));
+            if (email == this.Email && password == this.Password && password != null && email != null)
+            {
+                this.isLoggedIn = true;
+                Console.WriteLine("Zalogowano pomyślnie");
+            }
+            else
+            {
+                Console.WriteLine("Błędne dane logowania");
+            }
         }
     }
 
