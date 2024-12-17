@@ -41,7 +41,7 @@ namespace PROJEKT
 
                     if (int.TryParse(input, out choice) && choice >= 1 && choice <= 13)
                     {
-                        break; 
+                        break;
                     }
                     else
                     {
@@ -294,37 +294,36 @@ namespace PROJEKT
             Console.ReadKey();
         }
 
-        static void KmMileConverter()
-{
-    Console.WriteLine("Wybierz opcję:");
-    Console.WriteLine("1 - Przelicz km na mile");
-    Console.WriteLine("2 - Przelicz mile na km");
-
-    int choice = int.Parse(Console.ReadLine());
-
-    if (choice == 1)
-    {
-        Console.Write("Podaj liczbę kilometrów: ");
-        double km = double.Parse(Console.ReadLine());
-        double miles = KmToMiles(km);
-        Console.WriteLine($"{km} kilometrów to {miles} mil.");
-    }
-    else if (choice == 2)
-    {
-        Console.Write("Podaj liczbę mil: ");
-        double miles = double.Parse(Console.ReadLine());
-        double km = MilesToKm(miles);
-        Console.WriteLine($"{miles} mil to {km} kilometrów.");
-    }
-    else
-    {
-        Console.WriteLine("Niepoprawny wybór!");
-    }
-
-    WaitForKeyPress();
-}
-
         static void PowerUnitConverter()
+        {
+            Console.WriteLine("Wybierz opcję przeliczenia:");
+            Console.WriteLine("1. kW na KM");
+            Console.WriteLine("2. KM na kW");
+            int option = int.Parse(Console.ReadLine());
+
+            switch (option)
+            {
+                case 1:
+                    Console.Write("Podaj wartość w kW: ");
+                    double kW = double.Parse(Console.ReadLine());
+                    double horsepower = kW * 1.34102;
+                    Console.WriteLine($"{kW} kW = {horsepower} KM");
+                    break;
+                case 2:
+                    Console.Write("Podaj wartość w KM: ");
+                    double kmPower = double.Parse(Console.ReadLine());
+                    double kWValue = kmPower * 0.7457;
+                    Console.WriteLine($"{kmPower} KM = {kWValue} kW");
+                    break;
+                default:
+                    Console.WriteLine("Niepoprawny wybór.");
+                    break;
+            }
+
+            WaitForKeyPress();
+        }
+
+        static void KmMileConverter()
         {
             Console.WriteLine("Wybierz opcję:");
             Console.WriteLine("1 - Przelicz km na mile");
