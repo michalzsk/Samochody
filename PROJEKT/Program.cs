@@ -472,25 +472,25 @@ namespace PROJEKT
         static List<Car> CarList = new();
         static public void initalizeCars()
         {
-            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, "2009-2011", "diesel", 139900, 9.0, 6.3, 1071), "Exeo"));
-            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, "2018-teraz", "diesel", 139900, 9.0, 6.3, 1071), "Tarraco"));
-            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 204, 253, "2007-teraz", "benzyna", 239900, 12.0, 8.1, 1200), "A5"));
-            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 245, 265, "1995-2024", "benzyna", 269900, 11.5, 7.2, 1350), "A4"));
-            CarList.Add(new Audi(new CarInfo(2.5, "srebrny", 185, 245, "2008-teraz", "diesel", 249900, 7.0, 5.9, 1250), "Q5"));
-            CarList.Add(new Audi(new CarInfo(2.0, "biały", 190, 230, "2005-teraz", "benzyna", 279900, 9.0, 7.5, 1300), "Q7"));
-            CarList.Add(new BMW(new CarInfo(2.0, "niebieski", 192, 250, "2003-teraz", "diesel", 219900, 8.5, 6.5, 1350), "X3"));
-            CarList.Add(new BMW(new CarInfo(3.0, "czerwony", 300, 280, "2014-2021", "benzyna", 399900, 12.5, 9.3, 1500), "M4"));
-            CarList.Add(new BMW(new CarInfo(3.0, "czarny", 250, 260, "2000-teraz", "diesel", 269900, 9.5, 7.8, 1400), "X5"));
-            CarList.Add(new Mercedes(new CarInfo(2.0, "złoty", 210, 250, "1993-teraz", "benzyna", 239900, 8.5, 6.2, 1320), "C-Class"));
-            CarList.Add(new Mercedes(new CarInfo(3.0, "biały", 300, 270, "1993-teraz", "diesel", 359900, 10.0, 8.5, 1450), "E-Class"));
-            CarList.Add(new Mercedes(new CarInfo(2.5, "czarny", 260, 260, "1972-teraz", "benzyna", 299900, 9.0, 7.0, 1400), "S-Class"));
-            CarList.Add(new Volkswagen(new CarInfo(1.5, "zielony", 150, 200, "1974-teraz", "benzyna", 109900, 6.5, 5.8, 1150), "Golf"));
-            CarList.Add(new Volkswagen(new CarInfo(2.0, "niebieski", 180, 220, "1973-teraz", "diesel", 139900, 7.5, 6.2, 1250), "Passat"));
-            CarList.Add(new Volkswagen(new CarInfo(2.0, "srebrny", 150, 210, "2007-teraz", "diesel", 129900, 6.0, 5.5, 1200), "Tiguan"));
-            CarList.Add(new Opel(new CarInfo(1.6, "czerwony", 120, 190, "1991-teraz", "benzyna", 87900, 6.5, 5.5, 1100), "Astra"));
-            CarList.Add(new Opel(new CarInfo(2.0, "żółty", 170, 210, "2008-2023", "diesel", 139900, 7.0, 6.0, 1200), "Insignia"));
-            CarList.Add(new Fiat(new CarInfo(1.4, "błękitny", 95, 180, "1987-teraz", "benzyna", 67900, 7.0, 6.5, 1000), "Tipo"));
-            CarList.Add(new Fiat(new CarInfo(1.6, "czarny", 130, 200, "2014-2024", "diesel", 89900, 6.0, 5.3, 1100), "500X"));
+            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, "2009", "diesel", 139900, 9.0, 6.3, 1071), "Exeo"));
+            CarList.Add(new Seat(new CarInfo(2.0, "szary", 202, 240, "2018", "diesel", 139900, 9.0, 6.3, 1071), "Tarraco"));
+            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 204, 253, "2007", "benzyna", 239900, 12.0, 8.1, 1200), "A5"));
+            CarList.Add(new Audi(new CarInfo(3.0, "czarny", 245, 265, "1995", "benzyna", 269900, 11.5, 7.2, 1350), "A4"));
+            CarList.Add(new Audi(new CarInfo(2.5, "srebrny", 185, 245, "2008", "diesel", 249900, 7.0, 5.9, 1250), "Q5"));
+            CarList.Add(new Audi(new CarInfo(2.0, "biały", 190, 230, "2005", "benzyna", 279900, 9.0, 7.5, 1300), "Q7"));
+            CarList.Add(new BMW(new CarInfo(2.0, "niebieski", 192, 250, "2003", "diesel", 219900, 8.5, 6.5, 1350), "X3"));
+            CarList.Add(new BMW(new CarInfo(3.0, "czerwony", 300, 280, "2014", "benzyna", 399900, 12.5, 9.3, 1500), "M4"));
+            CarList.Add(new BMW(new CarInfo(3.0, "czarny", 250, 260, "2000", "diesel", 269900, 9.5, 7.8, 1400), "X5"));
+            CarList.Add(new Mercedes(new CarInfo(2.0, "złoty", 210, 250, "1993", "benzyna", 239900, 8.5, 6.2, 1320), "C-Class"));
+            CarList.Add(new Mercedes(new CarInfo(3.0, "biały", 300, 270, "1993", "diesel", 359900, 10.0, 8.5, 1450), "E-Class"));
+            CarList.Add(new Mercedes(new CarInfo(2.5, "czarny", 260, 260, "1972", "benzyna", 299900, 9.0, 7.0, 1400), "S-Class"));
+            CarList.Add(new Volkswagen(new CarInfo(1.5, "zielony", 150, 200, "1974", "benzyna", 109900, 6.5, 5.8, 1150), "Golf"));
+            CarList.Add(new Volkswagen(new CarInfo(2.0, "niebieski", 180, 220, "1973", "diesel", 139900, 7.5, 6.2, 1250), "Passat"));
+            CarList.Add(new Volkswagen(new CarInfo(2.0, "srebrny", 150, 210, "2007", "diesel", 129900, 6.0, 5.5, 1200), "Tiguan"));
+            CarList.Add(new Opel(new CarInfo(1.6, "czerwony", 120, 190, "1991", "benzyna", 87900, 6.5, 5.5, 1100), "Astra"));
+            CarList.Add(new Opel(new CarInfo(2.0, "żółty", 170, 210, "2008", "diesel", 139900, 7.0, 6.0, 1200), "Insignia"));
+            CarList.Add(new Fiat(new CarInfo(1.4, "błękitny", 95, 180, "1987", "benzyna", 67900, 7.0, 6.5, 1000), "Tipo"));
+            CarList.Add(new Fiat(new CarInfo(1.6, "czarny", 130, 200, "2014", "diesel", 89900, 6.0, 5.3, 1100), "500X"));
 
         }
         static void ViewCars()
@@ -527,11 +527,29 @@ namespace PROJEKT
 
             var car1 = CarList[carIndex1];
             var car2 = CarList[carIndex2];
+            int stability1 = Int32.Parse(car1.CarInfo.Year);
+            int stability2 = Int32.Parse(car2.CarInfo.Year);
             int KM1 = car1.CarInfo.HorsePower;
             int KM2 = car2.CarInfo.HorsePower;
             int skibidivar2;
             int carexplosionchance1=0;
             int carexplosionchance2=0;
+            if(stability1 >= 2000)
+            {
+                stability1 = stability1 - 2000;
+            }
+            else
+            {
+                stability1 = 0;
+            }
+            if (stability2 >= 2000)
+            {
+                stability2 = stability2 - 2000;
+            }
+            else
+            {
+                stability2 = 0;
+            }
             Console.WriteLine("Czy pierwsze auto ma etanol?\n 1-TAK\n2-NIE");
             int skibidivar = Int32.Parse(Console.ReadLine());
             if(skibidivar == 1)
@@ -541,12 +559,12 @@ namespace PROJEKT
                 if (skibidivar2 >= 50)
                 {
                     Console.WriteLine("Toś poleciał");
-                    carexplosionchance1 = 100;
+                    carexplosionchance1 = 100-stability1;
                 }
                 else
                 {
                     Console.WriteLine("Powodzenia w wyścigu");
-                    carexplosionchance1 = skibidivar2 * 2;
+                    carexplosionchance1 = (skibidivar2 * 2)-stability1;
                     if (skibidivar2 < 10)
                     {
                         KM1 = KM1*((skibidivar2/10)+1);
@@ -566,12 +584,12 @@ namespace PROJEKT
                 if (skibidivar2 >= 50)
                 {
                     Console.WriteLine("Toś poleciał");
-                    carexplosionchance2 = 100;
+                    carexplosionchance2 = 100-stability2;
                 }
                 else
                 {
                     Console.WriteLine("Powodzenia w wyścigu");
-                    carexplosionchance2 = skibidivar2 * 2;
+                    carexplosionchance2 = (skibidivar2 * 2)-stability2;
                     if (skibidivar2 < 10)
                     {
                         KM2 = KM2 * ((skibidivar2 / 10) + 1);
